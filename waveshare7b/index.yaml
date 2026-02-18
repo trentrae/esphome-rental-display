@@ -7,9 +7,9 @@ esphome:
   friendly_name: "Rental Property Display 7B"
 
 packages:
-  device: !include device.yaml
-  common: !include common.yaml
-  substitutions: !include substitutions.yaml
+  - !include device.yaml
+  - !include common.yaml
+  - !include substitutions.yaml
 
 wifi:
   ssid: !secret wifi_ssid
