@@ -25,14 +25,13 @@
 #   alarm_panel, outside_temp, inside_temp
 
 packages:
-  # device:           !include device.yaml
-  common:           !include common.yaml
-  lvgl_main:        !include layouts/main.yaml
-  lvgl_fonts:       !include layouts/fonts.yaml
-  lvgl_colors:      !include layouts/colors.yaml
-  lvgl_intervals:   !include layouts/update_intervals.yaml
-  page_status:      !include layouts/pages/main_status.yaml
-  page_alarm:       !include layouts/pages/alarm_control.yaml
-  page_locks:       !include layouts/pages/locks_doors.yaml
-  page_lights:      !include layouts/pages/lighting_control.yaml
-  page_logs:        !include layouts/pages/access_logs.yaml
+  pkg_common:         !include common.yaml
+  pkg_lvgl_main:      !include layouts/main.yaml
+  pkg_lvgl_fonts:     !include layouts/fonts.yaml
+  pkg_lvgl_colors:    !include layouts/colors.yaml
+  pkg_lvgl_intervals: !include layouts/update_intervals.yaml
+  pkg_page_status:    !include layouts/pages/main_status.yaml
+  pkg_page_alarm:     !include layouts/pages/alarm_control.yaml
+  pkg_page_locks:     !include layouts/pages/locks_doors.yaml
+  pkg_page_lights:    !include layouts/pages/lighting_control.yaml
+  pkg_page_logs:      !include layouts/pages/access_logs.yaml
