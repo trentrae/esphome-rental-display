@@ -10,7 +10,6 @@ lvgl:
   update_interval: 1s
   byte_order: big_endian
 
-  # Wake on touch (resets idle counter)
   on_touch:
     - lambda: |-
         id(idle_seconds) = 0;
@@ -20,9 +19,6 @@ lvgl:
         then:
           - lvgl.resume:
           - lvgl.widget.redraw:
-
-  color: !include colors.yaml
-  font: !include fonts.yaml
 
   theme:
     obj:
@@ -47,5 +43,3 @@ lvgl:
 
     - id: page_access_logs
       widgets: !include pages/access_logs.yaml
-
-interval: !include update_intervals.yaml
