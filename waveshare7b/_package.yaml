@@ -25,7 +25,7 @@
 #   alarm_panel, outside_temp, inside_temp
 
 packages:
-  device:           !include device.yaml
+  # device:           !include device.yaml
   common:           !include common.yaml
   lvgl_main:        !include layouts/main.yaml
   lvgl_fonts:       !include layouts/fonts.yaml
