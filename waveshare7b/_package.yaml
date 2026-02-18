@@ -1,0 +1,38 @@
+# _package.yaml - Remote package entry point for esphome-rental-display
+# Waveshare ESP32-S3-Touch-LCD-7B | 1024x600
+#
+# Reference this single file from each property's local ESPHome yaml:
+#
+#   packages:
+#     remote_package:
+#       url: https://github.com/trentrae/esphome-rental-display
+#       ref: main
+#       file: waveshare7b/_package.yaml
+#       refresh: 1d
+#
+# Your local yaml must define:
+#   - esphome: (name, friendly_name)
+#   - substitutions: (all entity IDs and property_name)
+#   - wifi:
+#   - api:
+#   - ota:
+#   - logger:
+#
+# Required substitutions (must be present in your local yaml):
+#   property_name, living_room_light, kitchen_light, outdoor_light,
+#   front_door_lock, back_door_lock, south_garage_door,
+#   front_door_sensor, back_door_sensor, south_garage_sensor,
+#   alarm_panel, outside_temp, inside_temp
+
+packages:
+  device:           !include device.yaml
+  common:           !include common.yaml
+  lvgl_main:        !include layouts/main.yaml
+  lvgl_fonts:       !include layouts/fonts.yaml
+  lvgl_colors:      !include layouts/colors.yaml
+  lvgl_intervals:   !include layouts/update_intervals.yaml
+  page_status:      !include layouts/pages/main_status.yaml
+  page_alarm:       !include layouts/pages/alarm_control.yaml
+  page_locks:       !include layouts/pages/locks_doors.yaml
+  page_lights:      !include layouts/pages/lighting_control.yaml
+  page_logs:        !include layouts/pages/access_logs.yaml
