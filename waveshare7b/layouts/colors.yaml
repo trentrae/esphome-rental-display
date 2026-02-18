@@ -1,0 +1,52 @@
+# colors.yaml - Dark theme color palette
+
+- id: bg_primary
+  hex: "1C1C1E"
+
+- id: bg_secondary
+  hex: "2C2C2E"
+
+- id: bg_tertiary
+  hex: "3A3A3C"
+
+- id: accent_blue
+  hex: "0A84FF"
+
+- id: accent_green
+  hex: "30D158"
+
+- id: accent_red
+  hex: "FF453A"
+
+- id: accent_orange
+  hex: "FF9F0A"
+
+- id: accent_purple
+  hex: "BF5AF2"
+
+- id: accent_yellow
+  hex: "FFD700"
+
+- id: text_primary
+  hex: "FFFFFF"
+
+- id: text_secondary
+  hex: "EBEBF5"
+
+- id: text_tertiary
+  hex: "8E8E93"
+
+- id: color_white
+  hex: "FFFFFF"
+
+- id: color_gray
+  hex: "8E8E93"
+
+- id: color_green
+  hex: "30D158"
+
+- id: color_orange
+  hex: "FF9F0A"
+
+- id: color_black
+  hex: "000000"

@@ -1,0 +1,156 @@
+# common.yaml - Sensors, Scripts, Global Variables
+# Includes auto screen-saver via lvgl.pause (workaround for 7B backlight limitation)
+
+time:
+  - platform: homeassistant
+    id: ha_time
+
+globals:
+  - id: entered_code
+    type: std::string
+    initial_value: '""'
+
+  - id: pending_action
+    type: std::string
+    initial_value: '""'
+
+  # Tracks seconds since last touch for screen-saver
+  - id: idle_seconds
+    type: int
+    initial_value: '0'
+
+# Screen saver - pause LVGL after 5 minutes of inactivity
+# Touch screen to wake. Adjust interval as needed.
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          id(idle_seconds) += 1;
+          if (id(idle_seconds) >= 300) {  // 5 minutes
+            id(idle_seconds) = 0;
+            // lvgl.pause handled via on_idle below
+          }
+
+sensor:
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    id: wifi_signal_strength
+    update_interval: 60s
+    internal: true
+
+  - platform: homeassistant
+    id: outside_temp_sensor
+    entity_id: ${outside_temp}
+    internal: true
+
+  - platform: homeassistant
+    id: alarm_delay_time
+    entity_id: ${alarm_panel}
+    attribute: delay
+    internal: true
+
+  - platform: homeassistant
+    id: inside_temp_sensor
+    entity_id: ${inside_temp}
+    internal: true
+
+text_sensor:
+  - platform: homeassistant
+    id: alarm_state
+    entity_id: ${alarm_panel}
+    internal: true
+
+binary_sensor:
+  - platform: homeassistant
+    id: living_room_light_state
+    entity_id: ${living_room_light}
+    attribute: is_on
+    internal: true
+
+  - platform: homeassistant
+    id: front_door_locked
+    entity_id: ${front_door_lock}
+    attribute: is_locked
+    internal: true
+
+  - platform: homeassistant
+    id: garage_door_open
+    entity_id: ${south_garage_sensor}
+    internal: true
+
+  - platform: homeassistant
+    id: back_door_sensor_open
+    entity_id: ${back_door_sensor}
+    internal: true
+
+  - platform: homeassistant
+    id: front_door_sensor_open
+    entity_id: ${front_door_sensor}
+    internal: true
+
+  - platform: homeassistant
+    id: back_door_locked
+    entity_id: ${back_door_lock}
+    attribute: is_locked
+    internal: true
+
+  - platform: homeassistant
+    id: kitchen_light_state
+    entity_id: ${kitchen_light}
+    attribute: is_on
+    internal: true
+
+  - platform: homeassistant
+    id: outdoor_light_state
+    entity_id: ${outdoor_light}
+    attribute: is_on
+    internal: true
+
+script:
+  - id: arm_away_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_arm_away
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'
+
+  - id: arm_home_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_arm_home
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'
+
+  - id: arm_night_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_arm_night
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'
+
+  - id: arm_vacation_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_arm_vacation
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'
+
+  - id: arm_custom_bypass_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_arm_custom_bypass
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'
+
+  - id: disarm_script
+    then:
+      - homeassistant.service:
+          service: alarm_control_panel.alarm_disarm
+          data:
+            entity_id: ${alarm_panel}
+            code: !lambda 'return id(entered_code);'

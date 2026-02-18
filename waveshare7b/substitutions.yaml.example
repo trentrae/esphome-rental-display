@@ -1,0 +1,31 @@
+# substitutions.yaml.example
+# Copy to substitutions.yaml and fill in YOUR Home Assistant entity IDs
+# Hardware pins are hardcoded in device.yaml (7B uses most GPIO for RGB bus)
+
+substitutions:
+  # ── Property ──────────────────────────────────────────────
+  property_name: "EmeraldTide"
+
+  # ── Lights ────────────────────────────────────────────────
+  living_room_light: "light.living_room"
+  kitchen_light: "light.kitchen"             # Shown on 7B lighting page
+  outdoor_light: "light.outdoor_front"       # Shown on 7B lighting page
+
+  # ── Locks ─────────────────────────────────────────────────
+  front_door_lock: "lock.front_door"
+  back_door_lock: "lock.back_door"           # Added for 7B (more space)
+
+  # ── Garage / Covers ───────────────────────────────────────
+  south_garage_door: "cover.garage_door"
+
+  # ── Contact / Binary Sensors ──────────────────────────────
+  front_door_sensor: "binary_sensor.front_door_contact"
+  back_door_sensor: "binary_sensor.back_door_contact"
+  south_garage_sensor: "binary_sensor.south_garage_door"
+
+  # ── Alarm ─────────────────────────────────────────────────
+  alarm_panel: "alarm_control_panel.alarmo"
+
+  # ── Climate ───────────────────────────────────────────────
+  outside_temp: "sensor.outside_temperature"
+  inside_temp: "sensor.inside_temperature"   # Second temp shown on 7B status page

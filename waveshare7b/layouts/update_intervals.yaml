@@ -1,0 +1,419 @@
+# update_intervals.yaml - Live entity state updates (1s refresh)
+# Expanded for 7B: dual temps, back door lock, 3 lights, clock, inside temp
+
+- interval: 1s
+  then:
+    # ═══════════════════════════════════════════════════════════
+    # WiFi Signal Bars
+    # ═══════════════════════════════════════════════════════════
+    - lambda: |-
+        float signal = id(wifi_signal_strength).state;
+        auto color_strong = id(accent_green);
+        auto color_weak   = id(text_tertiary);
+        auto b1 = id(wifi_bar_1).make_call(); auto b2 = id(wifi_bar_2).make_call();
+        auto b3 = id(wifi_bar_3).make_call(); auto b4 = id(wifi_bar_4).make_call();
+        if (signal > -50) {
+          b1.set_bg_color(color_strong); b2.set_bg_color(color_strong);
+          b3.set_bg_color(color_strong); b4.set_bg_color(color_strong);
+        } else if (signal > -60) {
+          b1.set_bg_color(color_strong); b2.set_bg_color(color_strong);
+          b3.set_bg_color(color_strong); b4.set_bg_color(color_weak);
+        } else if (signal > -70) {
+          b1.set_bg_color(color_strong); b2.set_bg_color(color_strong);
+          b3.set_bg_color(color_weak); b4.set_bg_color(color_weak);
+        } else {
+          b1.set_bg_color(color_strong); b2.set_bg_color(color_weak);
+          b3.set_bg_color(color_weak); b4.set_bg_color(color_weak);
+        }
+        b1.perform(); b2.perform(); b3.perform(); b4.perform();
+
+    # ═══════════════════════════════════════════════════════════
+    # Clock - Last Update Time
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: last_update_time
+        text: !lambda |-
+          auto t = id(ha_time).now();
+          if (!t.is_valid()) return "--:--";
+          char buf[8];
+          snprintf(buf, sizeof(buf), "%02d:%02d", t.hour, t.minute);
+          return buf;
+
+    # ═══════════════════════════════════════════════════════════
+    # Outside Temperature
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: outside_temp_main
+        text: !lambda |-
+          if (!id(outside_temp_sensor).has_state()) return "--°F";
+          char buf[10]; snprintf(buf, sizeof(buf), "%.0f°F", id(outside_temp_sensor).state);
+          return buf;
+
+    # ═══════════════════════════════════════════════════════════
+    # Inside Temperature (7B extra entity)
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: inside_temp_main
+        text: !lambda |-
+          if (!id(inside_temp_sensor).has_state()) return "--°F";
+          char buf[10]; snprintf(buf, sizeof(buf), "%.0f°F", id(inside_temp_sensor).state);
+          return buf;
+
+    # ═══════════════════════════════════════════════════════════
+    # Alarm Status - Main Page
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: alarm_status_main
+        text: !lambda |-
+          if (!id(alarm_state).has_state()) return "Connecting...";
+          std::string s = id(alarm_state).state;
+          if (s == "disarmed") return "DISARMED";
+          if (s == "armed_away") return "ARMED AWAY";
+          if (s == "armed_home") return "ARMED HOME";
+          if (s == "armed_night") return "ARMED NIGHT";
+          if (s == "armed_vacation") return "ARMED VACATION";
+          if (s == "armed_custom_bypass") return "ARMED CUSTOM";
+          if (s == "pending") return "ARMING...";
+          if (s == "triggered") return "TRIGGERED!";
+          return "Unknown";
+        text_color: !lambda |-
+          if (!id(alarm_state).has_state()) return 0x8E8E93;
+          std::string s = id(alarm_state).state;
+          if (s == "disarmed") return 0x8E8E93;
+          if (s == "armed_away" || s == "armed_home" || s == "armed_night" || s == "armed_vacation" || s == "armed_custom_bypass") return 0x30D158;
+          if (s == "pending") return 0xFF9F0A;
+          if (s == "triggered") return 0xFF453A;
+          return 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Alarm Status - Alarm Page
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: alarm_status_detail
+        text: !lambda |-
+          if (!id(alarm_state).has_state()) return "Connecting...";
+          std::string s = id(alarm_state).state;
+          if (s == "disarmed") return "DISARMED";
+          if (s == "armed_away") return "ARMED AWAY";
+          if (s == "armed_home") return "ARMED HOME";
+          if (s == "armed_night") return "ARMED NIGHT";
+          if (s == "armed_vacation") return "ARMED VACATION";
+          if (s == "armed_custom_bypass") return "ARMED CUSTOM";
+          if (s == "pending") return "ARMING...";
+          if (s == "triggered") return "TRIGGERED!";
+          return "Unknown";
+        text_color: !lambda |-
+          if (!id(alarm_state).has_state()) return 0x8E8E93;
+          std::string s = id(alarm_state).state;
+          if (s == "disarmed") return 0x8E8E93;
+          if (s == "armed_away" || s == "armed_home" || s == "armed_night" || s == "armed_vacation" || s == "armed_custom_bypass") return 0x30D158;
+          if (s == "pending") return 0xFF9F0A;
+          if (s == "triggered") return 0xFF453A;
+          return 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Alarm Countdowns
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: alarm_countdown_detail
+        text: !lambda |-
+          if (id(alarm_state).has_state() && id(alarm_state).state == "pending") {
+            if (id(alarm_delay_time).has_state()) {
+              int s = (int)id(alarm_delay_time).state;
+              if (s > 0) { char buf[20]; snprintf(buf, sizeof(buf), "%d seconds", s); return buf; }
+            }
+            return "Arming...";
+          }
+          return "";
+
+    - lvgl.label.update:
+        id: alarm_countdown_main
+        text: !lambda |-
+          if (id(alarm_state).has_state() && id(alarm_state).state == "pending") {
+            if (id(alarm_delay_time).has_state()) {
+              int s = (int)id(alarm_delay_time).state;
+              if (s > 0) { char buf[20]; snprintf(buf, sizeof(buf), "%d seconds", s); return buf; }
+            }
+            return "Arming...";
+          }
+          return "";
+
+    # ═══════════════════════════════════════════════════════════
+    # Open Sensors Warning (Status Page + Alarm Page shared card)
+    # ═══════════════════════════════════════════════════════════
+    - lambda: |-
+        bool has_open = false;
+        std::string list = "";
+        if (id(garage_door_open).has_state() && id(garage_door_open).state) {
+          has_open = true; list += "Garage  ";
+        }
+        if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) {
+          has_open = true; list += "Back Door  ";
+        }
+        if (id(front_door_locked).has_state() && !id(front_door_locked).state) {
+          has_open = true; list += "Front Unlocked  ";
+        }
+        if (id(back_door_locked).has_state() && !id(back_door_locked).state) {
+          has_open = true; list += "Back Unlocked";
+        }
+
+        // Status page warning card
+        auto show_call = id(open_sensors_warning).make_call();
+        show_call.set_hidden(!has_open);
+        show_call.perform();
+
+        if (has_open) {
+          auto text_call = id(open_sensors_list).make_call();
+          text_call.set_text(list.c_str());
+          text_call.perform();
+        }
+
+    # Alarm page sensor status card (always visible - shows "All Secured" or list)
+    - lvgl.label.update:
+        id: open_sensors_list
+        text: !lambda |-
+          std::string list = "";
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) list += "Garage  ";
+          if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) list += "Back Door  ";
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) list += "Front Unlocked  ";
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) list += "Back Unlocked";
+          if (list.empty()) return "All Secured";
+          return list.c_str();
+        text_color: !lambda |-
+          bool has_open = false;
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) has_open = true;
+          if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) has_open = true;
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) has_open = true;
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) has_open = true;
+          return has_open ? 0xFF453A : 0x30D158;
+
+    # ═══════════════════════════════════════════════════════════
+    # Front Door Lock
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: front_door_main
+        text: !lambda |-
+          if (!id(front_door_locked).has_state()) return "Unknown";
+          return id(front_door_locked).state ? "Locked" : "Unlocked";
+        text_color: !lambda |-
+          if (!id(front_door_locked).has_state()) return 0x8E8E93;
+          return id(front_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: front_door_icon_main
+        text_color: !lambda |-
+          if (!id(front_door_locked).has_state()) return 0x8E8E93;
+          return id(front_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: front_door_status_locks
+        text: !lambda |-
+          if (!id(front_door_locked).has_state()) return "Unknown";
+          return id(front_door_locked).state ? "Locked" : "Unlocked";
+        text_color: !lambda |-
+          if (!id(front_door_locked).has_state()) return 0x8E8E93;
+          return id(front_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: front_door_icon_locks
+        text_color: !lambda |-
+          if (!id(front_door_locked).has_state()) return 0x8E8E93;
+          return id(front_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: front_door_sensor_status
+        text: !lambda |-
+          if (!id(front_door_sensor_open).has_state()) return "Unknown";
+          return id(front_door_sensor_open).state ? "Door OPEN" : "Door Closed";
+        text_color: !lambda |-
+          if (!id(front_door_sensor_open).has_state()) return 0x8E8E93;
+          return id(front_door_sensor_open).state ? 0xFF453A : 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Back Door Lock (new for 7B)
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: back_door_main
+        text: !lambda |-
+          if (!id(back_door_locked).has_state()) return "Unknown";
+          return id(back_door_locked).state ? "Locked" : "Unlocked";
+        text_color: !lambda |-
+          if (!id(back_door_locked).has_state()) return 0x8E8E93;
+          return id(back_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: back_door_icon_main
+        text_color: !lambda |-
+          if (!id(back_door_locked).has_state()) return 0x8E8E93;
+          return id(back_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: back_door_status_locks
+        text: !lambda |-
+          if (!id(back_door_locked).has_state()) return "Unknown";
+          return id(back_door_locked).state ? "Locked" : "Unlocked";
+        text_color: !lambda |-
+          if (!id(back_door_locked).has_state()) return 0x8E8E93;
+          return id(back_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: back_door_icon_locks
+        text_color: !lambda |-
+          if (!id(back_door_locked).has_state()) return 0x8E8E93;
+          return id(back_door_locked).state ? 0x30D158 : 0xFF453A;
+
+    - lvgl.label.update:
+        id: back_door_sensor_status
+        text: !lambda |-
+          if (!id(back_door_sensor_open).has_state()) return "Unknown";
+          return id(back_door_sensor_open).state ? "Door OPEN" : "Door Closed";
+        text_color: !lambda |-
+          if (!id(back_door_sensor_open).has_state()) return 0x8E8E93;
+          return id(back_door_sensor_open).state ? 0xFF453A : 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Garage Door
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: garage_icon_main
+        text: !lambda |-
+          if (!id(garage_door_open).has_state()) return "\U000F12D3";
+          return id(garage_door_open).state ? "\U000F12D4" : "\U000F12D3";
+        text_color: !lambda |-
+          if (!id(garage_door_open).has_state()) return 0x8E8E93;
+          return id(garage_door_open).state ? 0xFF9F0A : 0x30D158;
+
+    - lvgl.label.update:
+        id: garage_status_main
+        text: !lambda |-
+          if (!id(garage_door_open).has_state()) return "Unknown";
+          return id(garage_door_open).state ? "Open" : "Closed";
+        text_color: !lambda |-
+          if (!id(garage_door_open).has_state()) return 0x8E8E93;
+          return id(garage_door_open).state ? 0xFF9F0A : 0x30D158;
+
+    - lvgl.label.update:
+        id: garage_icon_locks
+        text: !lambda |-
+          if (!id(garage_door_open).has_state()) return "\U000F12D3";
+          return id(garage_door_open).state ? "\U000F12D4" : "\U000F12D3";
+        text_color: !lambda |-
+          if (!id(garage_door_open).has_state()) return 0x8E8E93;
+          return id(garage_door_open).state ? 0xFF9F0A : 0x30D158;
+
+    - lvgl.label.update:
+        id: garage_status_locks
+        text: !lambda |-
+          if (!id(garage_door_open).has_state()) return "Unknown";
+          return id(garage_door_open).state ? "Open" : "Closed";
+        text_color: !lambda |-
+          if (!id(garage_door_open).has_state()) return 0x8E8E93;
+          return id(garage_door_open).state ? 0xFF9F0A : 0x30D158;
+
+    - lvgl.label.update:
+        id: garage_quick_icon
+        text: !lambda |-
+          if (!id(garage_door_open).has_state()) return "\U000F12D3";
+          return id(garage_door_open).state ? "\U000F12D4" : "\U000F12D3";
+        text_color: !lambda |-
+          if (!id(garage_door_open).has_state()) return 0x30D158;
+          return id(garage_door_open).state ? 0xFF9F0A : 0x30D158;
+
+    # ═══════════════════════════════════════════════════════════
+    # Security Summary (locks page)
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: security_summary
+        text: !lambda |-
+          bool any_open = false;
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) any_open = true;
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) any_open = true;
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) any_open = true;
+          return any_open ? "Open / Unsecured" : "All Secured";
+        text_color: !lambda |-
+          bool any_open = false;
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) any_open = true;
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) any_open = true;
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) any_open = true;
+          return any_open ? 0xFF453A : 0x30D158;
+
+    # ═══════════════════════════════════════════════════════════
+    # Living Room Light
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: living_room_main
+        text: !lambda |-
+          if (!id(living_room_light_state).has_state()) return "OFF";
+          return id(living_room_light_state).state ? "ON" : "OFF";
+        text_color: !lambda |-
+          if (!id(living_room_light_state).has_state()) return 0x8E8E93;
+          return id(living_room_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    - lvgl.label.update:
+        id: living_room_icon_main
+        text_color: !lambda |-
+          if (!id(living_room_light_state).has_state()) return 0x8E8E93;
+          return id(living_room_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    - lvgl.label.update:
+        id: living_room_toggle_text
+        text: !lambda |-
+          if (!id(living_room_light_state).has_state()) return "OFF";
+          return id(living_room_light_state).state ? "ON" : "OFF";
+        text_color: !lambda |-
+          if (!id(living_room_light_state).has_state()) return 0x8E8E93;
+          return id(living_room_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    - lvgl.label.update:
+        id: living_room_light_icon
+        text_color: !lambda |-
+          if (!id(living_room_light_state).has_state()) return 0x8E8E93;
+          return id(living_room_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Kitchen Light (new for 7B)
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: kitchen_toggle_text
+        text: !lambda |-
+          if (!id(kitchen_light_state).has_state()) return "OFF";
+          return id(kitchen_light_state).state ? "ON" : "OFF";
+        text_color: !lambda |-
+          if (!id(kitchen_light_state).has_state()) return 0x8E8E93;
+          return id(kitchen_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    - lvgl.label.update:
+        id: kitchen_light_icon
+        text_color: !lambda |-
+          if (!id(kitchen_light_state).has_state()) return 0x8E8E93;
+          return id(kitchen_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Outdoor Light (new for 7B)
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: outdoor_toggle_text
+        text: !lambda |-
+          if (!id(outdoor_light_state).has_state()) return "OFF";
+          return id(outdoor_light_state).state ? "ON" : "OFF";
+        text_color: !lambda |-
+          if (!id(outdoor_light_state).has_state()) return 0x8E8E93;
+          return id(outdoor_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    - lvgl.label.update:
+        id: outdoor_light_icon
+        text_color: !lambda |-
+          if (!id(outdoor_light_state).has_state()) return 0x8E8E93;
+          return id(outdoor_light_state).state ? 0xFFD700 : 0x8E8E93;
+
+    # ═══════════════════════════════════════════════════════════
+    # Keypad Code Display
+    # ═══════════════════════════════════════════════════════════
+    - lvgl.label.update:
+        id: code_display
+        text: !lambda |-
+          std::string code = id(entered_code);
+          std::string display = "";
+          for (size_t i = 0; i < code.length() && i < 6; i++) display += "* ";
+          if (display.empty()) display = "_ _ _ _";
+          return display.c_str();

@@ -1,0 +1,356 @@
+# lighting_control.yaml - Lighting Controls Page
+# 1024x600 | 3 individual light cards + all-on/all-off quick actions
+
+# ── Header ────────────────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 70
+    bg_color: 0x1C1C1E
+    border_width: 0
+    align: TOP_MID
+    widgets:
+      - label:
+          text: "LIGHTING CONTROL"
+          text_font: roboto_28
+          text_color: 0xFFFFFF
+          align: CENTER
+
+# ── Content Area ──────────────────────────────────────────────────────────────
+- obj:
+    x: 0
+    y: 70
+    width: 1024
+    height: 450
+    bg_color: 0x1C1C1E
+    border_width: 0
+    widgets:
+
+      # ── Living Room Light Card ────────────────────────────────────────────────
+      - obj:
+          x: 12
+          y: 12
+          width: 316
+          height: 280
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.toggle
+                data:
+                  entity_id: ${living_room_light}
+          widgets:
+            - label:
+                text: "Living Room"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 20
+            - label:
+                id: living_room_light_icon
+                text: "\U000F0335"
+                text_font: mdi_56
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -30
+            - label:
+                id: living_room_toggle_text
+                text: "OFF"
+                text_font: roboto_32
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 30
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_14
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -16
+
+      # ── Kitchen Light Card ────────────────────────────────────────────────────
+      - obj:
+          x: 344
+          y: 12
+          width: 316
+          height: 280
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.toggle
+                data:
+                  entity_id: ${kitchen_light}
+          widgets:
+            - label:
+                text: "Kitchen"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 20
+            - label:
+                id: kitchen_light_icon
+                text: "\U000F0335"
+                text_font: mdi_56
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -30
+            - label:
+                id: kitchen_toggle_text
+                text: "OFF"
+                text_font: roboto_32
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 30
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_14
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -16
+
+      # ── Outdoor Light Card ────────────────────────────────────────────────────
+      - obj:
+          x: 676
+          y: 12
+          width: 336
+          height: 280
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.toggle
+                data:
+                  entity_id: ${outdoor_light}
+          widgets:
+            - label:
+                text: "Outdoor Front"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 20
+            - label:
+                id: outdoor_light_icon
+                text: "\U000F0335"
+                text_font: mdi_56
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -30
+            - label:
+                id: outdoor_toggle_text
+                text: "OFF"
+                text_font: roboto_32
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 30
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_14
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -16
+
+      # ── Quick Actions ─────────────────────────────────────────────────────────
+      - obj:
+          x: 12
+          y: 308
+          width: 492
+          height: 120
+          bg_color: 0x0A84FF
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.turn_on
+                data:
+                  entity_id: ${living_room_light}
+            - homeassistant.service:
+                service: light.turn_on
+                data:
+                  entity_id: ${kitchen_light}
+            - homeassistant.service:
+                service: light.turn_on
+                data:
+                  entity_id: ${outdoor_light}
+          widgets:
+            - label:
+                text: "\U000F0769"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: -120
+            - label:
+                text: "ALL LIGHTS ON"
+                text_font: roboto_28
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: 60
+
+      - obj:
+          x: 520
+          y: 308
+          width: 492
+          height: 120
+          bg_color: 0x3A3A3C
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${living_room_light}
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${kitchen_light}
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${outdoor_light}
+          widgets:
+            - label:
+                text: "\U000F0336"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: -120
+            - label:
+                text: "ALL LIGHTS OFF"
+                text_font: roboto_28
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: 60
+
+# ── Bottom Navigation ──────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 80
+    bg_color: 0x2C2C2E
+    border_width: 0
+    align: BOTTOM_MID
+    widgets:
+      - obj:
+          x: 0
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_main_status
+          widgets:
+            - label:
+                text: "\U000F02DC"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "STATUS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 205
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_alarm_control
+          widgets:
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "ALARM"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 410
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_locks_doors
+          widgets:
+            - label:
+                text: "\U000F033E"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOCKS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      # LIGHTS - active
+      - obj:
+          x: 615
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          widgets:
+            - label:
+                text: "\U000F0335"
+                text_font: mdi_28
+                text_color: 0x0A84FF
+                align: CENTER
+                y: -12
+            - label:
+                text: "LIGHTS"
+                text_font: roboto_14
+                text_color: 0x0A84FF
+                align: CENTER
+                y: 14
+            - obj:
+                width: 50
+                height: 3
+                bg_color: 0x0A84FF
+                radius: 2
+                align: BOTTOM_MID
+                y: -4
+
+      - obj:
+          x: 820
+          y: 0
+          width: 204
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_access_logs
+          widgets:
+            - label:
+                text: "\U000F0249"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOGS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14

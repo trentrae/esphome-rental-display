@@ -1,0 +1,92 @@
+# device.yaml - Waveshare ESP32-S3-Touch-LCD-7B
+# Resolution: 1024x600 | ST7701 RGB Parallel | GT911 Touch | I2C: GPIO8/9
+#
+# ⚠️  BACKLIGHT NOTE: The 7B uses a CH32V003 MCU to control backlight/brightness.
+#     ESPHome has no native driver for it yet (feature request #3202 open as of 2025).
+#     The display will work at full brightness. Use lvgl.pause on a timer for
+#     screen-saver / anti-burn protection instead.
+
+esp32:
+  board: esp32-s3-devkitc-1
+  variant: esp32s3
+  flash_size: 16MB
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_ESP32S3_DEFAULT_CPU_FREQ_240: "y"
+      CONFIG_ESP32S3_DATA_CACHE_64KB: "y"
+      CONFIG_ESP32S3_DATA_CACHE_LINE_64B: "y"
+      CONFIG_SPIRAM_FETCH_INSTRUCTIONS: "y"
+      CONFIG_SPIRAM_RODATA: "y"
+      CONFIG_ESP32S3_INSTRUCTION_CACHE_32KB: "y"
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+# I2C for GT911 touch controller
+i2c:
+  - id: i2c_touch
+    sda: GPIO8
+    scl: GPIO9
+    frequency: 400kHz
+
+# GT911 Capacitive Touch
+touchscreen:
+  - platform: gt911
+    id: my_touch
+    i2c_id: i2c_touch
+    interrupt_pin: GPIO4
+    reset_pin: GPIO38
+    on_touch:
+      - lambda: |-
+          ESP_LOGI("touch", "Touch at (%d, %d)", touch.x, touch.y);
+
+# RGB Parallel Display - ST7701 1024x600
+display:
+  - platform: rpi_dpi_rgb
+    id: my_display
+    auto_clear_enabled: false
+    update_interval: never
+    color_order: RGB
+    pclk_frequency: 30MHz
+    dimensions:
+      width: 1024
+      height: 600
+    de_pin:
+      number: GPIO40
+      ignore_strapping_warning: true
+    hsync_pin:
+      number: GPIO39
+      ignore_strapping_warning: true
+    vsync_pin:
+      number: GPIO41
+      ignore_strapping_warning: true
+    pclk_pin: GPIO42
+    hsync_back_porch: 8
+    hsync_front_porch: 8
+    hsync_pulse_width: 4
+    vsync_back_porch: 8
+    vsync_front_porch: 8
+    vsync_pulse_width: 4
+    data_pins:
+      red:
+        - GPIO45   # R0
+        - GPIO48   # R1
+        - GPIO47   # R2
+        - GPIO21   # R3
+        - GPIO14   # R4
+      green:
+        - GPIO5    # G0
+        - GPIO6    # G1
+        - GPIO7    # G2
+        - GPIO15   # G3
+        - GPIO16   # G4
+        - GPIO4    # G5
+      blue:
+        - GPIO8    # B0 (shared with I2C SDA - check your board rev!)
+        - GPIO3    # B1
+        - GPIO46   # B2
+        - GPIO9    # B3 (shared with I2C SCL - check your board rev!)
+        - GPIO1    # B4

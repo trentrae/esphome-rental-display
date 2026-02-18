@@ -1,0 +1,4 @@
+secrets.yaml
+substitutions.yaml
+.esphome/
+build/

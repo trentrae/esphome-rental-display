@@ -1,0 +1,179 @@
+# access_logs.yaml - Access Logs Placeholder Page
+# 1024x600
+
+- obj:
+    width: 1024
+    height: 70
+    bg_color: 0x1C1C1E
+    border_width: 0
+    align: TOP_MID
+    widgets:
+      - label:
+          text: "ACCESS LOGS"
+          text_font: roboto_28
+          text_color: 0xFFFFFF
+          align: CENTER
+
+- obj:
+    x: 0
+    y: 70
+    width: 1024
+    height: 450
+    bg_color: 0x1C1C1E
+    border_width: 0
+    widgets:
+      - obj:
+          x: 262
+          y: 120
+          width: 500
+          height: 200
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          pad_all: 30
+          widgets:
+            - label:
+                text: "\U000F0249"
+                text_font: mdi_56
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -30
+            - label:
+                text: "ACCESS LOGS"
+                text_font: roboto_28
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 28
+            - label:
+                text: "Coming Soon"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 60
+
+- obj:
+    width: 1024
+    height: 80
+    bg_color: 0x2C2C2E
+    border_width: 0
+    align: BOTTOM_MID
+    widgets:
+      - obj:
+          x: 0
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_main_status
+          widgets:
+            - label:
+                text: "\U000F02DC"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "STATUS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 205
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_alarm_control
+          widgets:
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "ALARM"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 410
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_locks_doors
+          widgets:
+            - label:
+                text: "\U000F033E"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOCKS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 615
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_lighting_control
+          widgets:
+            - label:
+                text: "\U000F0335"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LIGHTS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      # LOGS - active
+      - obj:
+          x: 820
+          y: 0
+          width: 204
+          height: 80
+          bg_color: 0x2C2C2E
+          widgets:
+            - label:
+                text: "\U000F0249"
+                text_font: mdi_28
+                text_color: 0x0A84FF
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOGS"
+                text_font: roboto_14
+                text_color: 0x0A84FF
+                align: CENTER
+                y: 14
+            - obj:
+                width: 50
+                height: 3
+                bg_color: 0x0A84FF
+                radius: 2
+                align: BOTTOM_MID
+                y: -4

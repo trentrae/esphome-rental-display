@@ -1,0 +1,51 @@
+# main.yaml - LVGL Layout Orchestrator
+# Display: 1024x600 landscape
+
+lvgl:
+  displays:
+    - my_display
+  touchscreens:
+    - my_touch
+
+  update_interval: 1s
+  byte_order: big_endian
+
+  # Wake on touch (resets idle counter)
+  on_touch:
+    - lambda: |-
+        id(idle_seconds) = 0;
+    - if:
+        condition:
+          lvgl.is_paused:
+        then:
+          - lvgl.resume:
+          - lvgl.widget.redraw:
+
+  color: !include colors.yaml
+  font: !include fonts.yaml
+
+  theme:
+    obj:
+      bg_color: 0x1C1C1E
+      text_color: 0xFFFFFF
+      border_width: 0
+      radius: 0
+      pad_all: 0
+
+  pages:
+    - id: page_main_status
+      widgets: !include pages/main_status.yaml
+
+    - id: page_alarm_control
+      widgets: !include pages/alarm_control.yaml
+
+    - id: page_locks_doors
+      widgets: !include pages/locks_doors.yaml
+
+    - id: page_lighting_control
+      widgets: !include pages/lighting_control.yaml
+
+    - id: page_access_logs
+      widgets: !include pages/access_logs.yaml
+
+interval: !include update_intervals.yaml

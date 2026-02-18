@@ -1,0 +1,576 @@
+# main_status.yaml - Status Overview Page
+# 1024x600 | Header: 70px | Nav: 80px | Content: 450px
+
+# ── Header ────────────────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 70
+    bg_color: 0x1C1C1E
+    border_width: 0
+    align: TOP_MID
+    widgets:
+      - label:
+          text: ${property_name}
+          text_font: roboto_28
+          text_color: 0xFFFFFF
+          align: CENTER
+          x: -60
+
+      # WiFi signal bars (top-right)
+      - obj:
+          id: wifi_bar_4
+          x: 948
+          y: 20
+          width: 7
+          height: 28
+          bg_color: 0x8E8E93
+          radius: 2
+      - obj:
+          id: wifi_bar_3
+          x: 958
+          y: 24
+          width: 7
+          height: 22
+          bg_color: 0x8E8E93
+          radius: 2
+      - obj:
+          id: wifi_bar_2
+          x: 968
+          y: 28
+          width: 7
+          height: 18
+          bg_color: 0x8E8E93
+          radius: 2
+      - obj:
+          id: wifi_bar_1
+          x: 978
+          y: 32
+          width: 7
+          height: 14
+          bg_color: 0x8E8E93
+          radius: 2
+
+# ── Content Area ──────────────────────────────────────────────────────────────
+- obj:
+    x: 0
+    y: 70
+    width: 1024
+    height: 450
+    bg_color: 0x1C1C1E
+    border_width: 0
+    widgets:
+
+      # ── Row 1: 6 status cards (outside temp, inside temp, front door,
+      #           back door, garage, living room light) ────────────────────────
+      - obj:
+          x: 12
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          widgets:
+            - label:
+                text: "Outside"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                text: "\U000F059D"
+                text_font: mdi_48
+                text_color: 0x0A84FF
+                align: CENTER
+                y: -10
+            - label:
+                id: outside_temp_main
+                text: "--°F"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 180
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          widgets:
+            - label:
+                text: "Inside"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                text: "\U000F0F55"
+                text_font: mdi_48
+                text_color: 0xFF9F0A
+                align: CENTER
+                y: -10
+            - label:
+                id: inside_temp_main
+                text: "--°F"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 348
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          widgets:
+            - label:
+                text: "Front Door"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                id: front_door_icon_main
+                text: "\U000F033E"
+                text_font: mdi_48
+                text_color: 0x30D158
+                align: CENTER
+                y: -10
+            - label:
+                id: front_door_main
+                text: "Locked"
+                text_font: roboto_20
+                text_color: 0x30D158
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 516
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          widgets:
+            - label:
+                text: "Back Door"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                id: back_door_icon_main
+                text: "\U000F033E"
+                text_font: mdi_48
+                text_color: 0x30D158
+                align: CENTER
+                y: -10
+            - label:
+                id: back_door_main
+                text: "Locked"
+                text_font: roboto_20
+                text_color: 0x30D158
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 684
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: cover.toggle
+                data:
+                  entity_id: ${south_garage_door}
+          widgets:
+            - label:
+                text: "Garage"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                id: garage_icon_main
+                text: "\U000F12D3"
+                text_font: mdi_48
+                text_color: 0x30D158
+                align: CENTER
+                y: -10
+            - label:
+                id: garage_status_main
+                text: "Closed"
+                text_font: roboto_20
+                text_color: 0x30D158
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 852
+          y: 12
+          width: 156
+          height: 120
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 14
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.toggle
+                data:
+                  entity_id: ${living_room_light}
+          widgets:
+            - label:
+                text: "Living Room"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 2
+            - label:
+                id: living_room_icon_main
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -10
+            - label:
+                id: living_room_main
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: BOTTOM_MID
+                y: -6
+
+      # ── Row 2: Large Security System Card ───────────────────────────────────
+      - obj:
+          x: 12
+          y: 145
+          width: 680
+          height: 180
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          pad_all: 24
+          widgets:
+            - label:
+                text: "SECURITY SYSTEM"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_LEFT
+                y: 0
+
+            - label:
+                id: alarm_status_main
+                text: "Connecting..."
+                text_font: roboto_36
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -10
+
+            - label:
+                id: alarm_countdown_main
+                text: ""
+                text_font: roboto_20
+                text_color: 0xFF9F0A
+                align: CENTER
+                y: 28
+
+            - obj:
+                x: 0
+                y: 110
+                width: 200
+                height: 52
+                bg_color: 0x0A84FF
+                radius: 12
+                clickable: true
+                on_click:
+                  - lvgl.page.show: page_alarm_control
+                widgets:
+                  - label:
+                      text: "ARM / DISARM"
+                      text_font: roboto_16
+                      text_color: 0xFFFFFF
+                      align: CENTER
+
+            - obj:
+                x: 218
+                y: 110
+                width: 200
+                height: 52
+                bg_color: 0x3A3A3C
+                radius: 12
+                clickable: true
+                on_click:
+                  - lvgl.page.show: page_locks_doors
+                widgets:
+                  - label:
+                      text: "LOCKS & DOORS"
+                      text_font: roboto_16
+                      text_color: 0xFFFFFF
+                      align: CENTER
+
+      # ── Open Sensors Warning (hidden by default) ─────────────────────────────
+      - obj:
+          id: open_sensors_warning
+          x: 12
+          y: 340
+          width: 680
+          height: 100
+          bg_color: 0xFF453A
+          border_width: 0
+          radius: 16
+          pad_all: 16
+          hidden: true
+          widgets:
+            - label:
+                text: "\U000F0493  OPEN SENSORS DETECTED"
+                text_font: roboto_16
+                text_color: 0xFFFFFF
+                align: TOP_MID
+                y: 0
+            - label:
+                id: open_sensors_list
+                text: ""
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 14
+
+      # ── Row 2 Right: Quick Action Cards ─────────────────────────────────────
+      - obj:
+          x: 708
+          y: 145
+          width: 300
+          height: 86
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${living_room_light}
+          widgets:
+            - label:
+                text: "\U000F0336"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                x: -60
+            - label:
+                text: "All Lights Off"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: 40
+            - label:
+                text: "Tap to turn off"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                x: 40
+                y: 20
+
+      - obj:
+          x: 708
+          y: 242
+          width: 300
+          height: 86
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: cover.toggle
+                data:
+                  entity_id: ${south_garage_door}
+          widgets:
+            - label:
+                id: garage_quick_icon
+                text: "\U000F12D3"
+                text_font: mdi_48
+                text_color: 0x30D158
+                align: CENTER
+                x: -60
+            - label:
+                text: "Garage Door"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                x: 40
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                x: 40
+                y: 20
+
+      - obj:
+          x: 708
+          y: 339
+          width: 300
+          height: 100
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          pad_all: 16
+          widgets:
+            - label:
+                text: "Last Updated"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+            - label:
+                id: last_update_time
+                text: "--:--"
+                text_font: roboto_32
+                text_color: 0xFFFFFF
+                align: CENTER
+
+# ── Bottom Navigation ──────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 80
+    bg_color: 0x2C2C2E
+    border_width: 0
+    align: BOTTOM_MID
+    widgets:
+      # STATUS - active
+      - obj:
+          x: 0
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          widgets:
+            - label:
+                text: "\U000F02DC"
+                text_font: mdi_28
+                text_color: 0x0A84FF
+                align: CENTER
+                y: -12
+            - label:
+                text: "STATUS"
+                text_font: roboto_14
+                text_color: 0x0A84FF
+                align: CENTER
+                y: 14
+            - obj:
+                width: 50
+                height: 3
+                bg_color: 0x0A84FF
+                radius: 2
+                align: BOTTOM_MID
+                y: -4
+
+      - obj:
+          x: 205
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_alarm_control
+          widgets:
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "ALARM"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 410
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_locks_doors
+          widgets:
+            - label:
+                text: "\U000F033E"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOCKS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 615
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_lighting_control
+          widgets:
+            - label:
+                text: "\U000F0335"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LIGHTS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 820
+          y: 0
+          width: 204
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_access_logs
+          widgets:
+            - label:
+                text: "\U000F0249"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOGS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14

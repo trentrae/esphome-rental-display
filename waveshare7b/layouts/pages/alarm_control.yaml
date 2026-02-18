@@ -1,0 +1,578 @@
+# alarm_control.yaml - Security / Alarm Control Page
+# 1024x600 | 6 arm mode buttons with more breathing room | Improved keypad
+
+# ── Header ────────────────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 70
+    bg_color: 0x1C1C1E
+    border_width: 0
+    align: TOP_MID
+    widgets:
+      - label:
+          text: "SECURITY"
+          text_font: roboto_28
+          text_color: 0xFFFFFF
+          align: CENTER
+
+# ── Content Area ──────────────────────────────────────────────────────────────
+- obj:
+    x: 0
+    y: 70
+    width: 1024
+    height: 450
+    bg_color: 0x1C1C1E
+    border_width: 0
+    scrollable: false
+    widgets:
+
+      # ── Alarm Status Card ────────────────────────────────────────────────────
+      - obj:
+          x: 12
+          y: 12
+          width: 620
+          height: 130
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          pad_all: 24
+          widgets:
+            - label:
+                text: "ALARM STATUS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_LEFT
+            - label:
+                id: alarm_status_detail
+                text: "DISARMED"
+                text_font: roboto_36
+                text_color: 0x30D158
+                align: CENTER
+                y: -4
+            - label:
+                id: alarm_countdown_detail
+                text: ""
+                text_font: roboto_20
+                text_color: 0xFF9F0A
+                align: BOTTOM_MID
+                y: -6
+
+      # ── Open Sensors Warning ─────────────────────────────────────────────────
+      - obj:
+          id: open_sensors_warning
+          x: 644
+          y: 12
+          width: 368
+          height: 130
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          pad_all: 20
+          hidden: false
+          widgets:
+            - label:
+                text: "SENSOR STATUS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_MID
+            - label:
+                id: open_sensors_list
+                text: "All Secured"
+                text_font: roboto_20
+                text_color: 0x30D158
+                align: CENTER
+
+      # ── Arm Mode Buttons Row 1 ────────────────────────────────────────────────
+      - obj:
+          x: 12
+          y: 158
+          width: 313
+          height: 120
+          bg_color: 0x30D158
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "arm_away";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "ARM AWAY"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 32
+
+      - obj:
+          x: 341
+          y: 158
+          width: 313
+          height: 120
+          bg_color: 0x0A84FF
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "arm_home";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F02DC"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "ARM HOME"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 32
+
+      - obj:
+          x: 670
+          y: 158
+          width: 342
+          height: 120
+          bg_color: 0xBF5AF2
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "arm_night";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F0594"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "ARM NIGHT"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 32
+
+      # ── Arm Mode Buttons Row 2 ────────────────────────────────────────────────
+      - obj:
+          x: 12
+          y: 292
+          width: 313
+          height: 120
+          bg_color: 0xFF9F0A
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "arm_vacation";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F0051"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "VACATION"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 32
+
+      - obj:
+          x: 341
+          y: 292
+          width: 313
+          height: 120
+          bg_color: 0x3A3A3C
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "arm_custom_bypass";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F0483"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "CUSTOM"
+                text_font: roboto_20
+                text_color: 0xEBEBF5
+                align: CENTER
+                y: 32
+
+      - obj:
+          x: 670
+          y: 292
+          width: 342
+          height: 120
+          bg_color: 0xFF453A
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(pending_action) = "disarm";
+                id(entered_code) = "";
+            - lvgl.widget.show: keypad_popup
+          widgets:
+            - label:
+                text: "\U000F0340"
+                text_font: mdi_56
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: -16
+            - label:
+                text: "DISARM"
+                text_font: roboto_20
+                text_color: 0xFFFFFF
+                align: CENTER
+                y: 32
+
+# ── Bottom Navigation ──────────────────────────────────────────────────────────
+- obj:
+    width: 1024
+    height: 80
+    bg_color: 0x2C2C2E
+    border_width: 0
+    align: BOTTOM_MID
+    widgets:
+      - obj:
+          x: 0
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_main_status
+          widgets:
+            - label:
+                text: "\U000F02DC"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "STATUS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      # ALARM - active
+      - obj:
+          x: 205
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          widgets:
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_28
+                text_color: 0x0A84FF
+                align: CENTER
+                y: -12
+            - label:
+                text: "ALARM"
+                text_font: roboto_14
+                text_color: 0x0A84FF
+                align: CENTER
+                y: 14
+            - obj:
+                width: 50
+                height: 3
+                bg_color: 0x0A84FF
+                radius: 2
+                align: BOTTOM_MID
+                y: -4
+
+      - obj:
+          x: 410
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_locks_doors
+          widgets:
+            - label:
+                text: "\U000F033E"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOCKS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 615
+          y: 0
+          width: 205
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_lighting_control
+          widgets:
+            - label:
+                text: "\U000F0335"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LIGHTS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+      - obj:
+          x: 820
+          y: 0
+          width: 204
+          height: 80
+          bg_color: 0x2C2C2E
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_access_logs
+          widgets:
+            - label:
+                text: "\U000F0249"
+                text_font: mdi_28
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -12
+            - label:
+                text: "LOGS"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 14
+
+# ── PIN Keypad Popup ───────────────────────────────────────────────────────────
+- obj:
+    id: keypad_popup
+    width: 420
+    height: 500
+    bg_color: 0x2C2C2E
+    border_width: 2
+    border_color: 0x3A3A3C
+    radius: 24
+    hidden: true
+    align: CENTER
+    widgets:
+      - label:
+          text: "Enter PIN Code"
+          text_font: roboto_24
+          text_color: 0xFFFFFF
+          align: TOP_MID
+          y: 20
+
+      - label:
+          id: code_display
+          text: "_ _ _ _"
+          text_font: roboto_36
+          text_color: 0x0A84FF
+          align: TOP_MID
+          y: 60
+
+      # Row 1
+      - obj:
+          x: 30
+          y: 130
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "1";
+          widgets:
+            - label: { text: "1", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 160
+          y: 130
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "2";
+          widgets:
+            - label: { text: "2", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 290
+          y: 130
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "3";
+          widgets:
+            - label: { text: "3", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      # Row 2
+      - obj:
+          x: 30
+          y: 216
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "4";
+          widgets:
+            - label: { text: "4", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 160
+          y: 216
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "5";
+          widgets:
+            - label: { text: "5", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 290
+          y: 216
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "6";
+          widgets:
+            - label: { text: "6", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      # Row 3
+      - obj:
+          x: 30
+          y: 302
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "7";
+          widgets:
+            - label: { text: "7", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 160
+          y: 302
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "8";
+          widgets:
+            - label: { text: "8", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 290
+          y: 302
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "9";
+          widgets:
+            - label: { text: "9", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      # Row 4: CLR | 0 | OK
+      - obj:
+          x: 30
+          y: 388
+          width: 100
+          height: 70
+          bg_color: 0xFF453A
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: id(entered_code) = "";
+          widgets:
+            - label: { text: "CLR", text_font: roboto_24, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 160
+          y: 388
+          width: 100
+          height: 70
+          bg_color: 0x3A3A3C
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "0";
+          widgets:
+            - label: { text: "0", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
+
+      - obj:
+          x: 290
+          y: 388
+          width: 100
+          height: 70
+          bg_color: 0x30D158
+          radius: 14
+          clickable: true
+          on_click:
+            - lambda: |-
+                std::string action = id(pending_action);
+                if (action == "arm_away") id(arm_away_script).execute();
+                else if (action == "arm_home") id(arm_home_script).execute();
+                else if (action == "arm_night") id(arm_night_script).execute();
+                else if (action == "arm_vacation") id(arm_vacation_script).execute();
+                else if (action == "arm_custom_bypass") id(arm_custom_bypass_script).execute();
+                else if (action == "disarm") id(disarm_script).execute();
+                id(entered_code) = "";
+                id(pending_action) = "";
+            - lvgl.widget.hide: keypad_popup
+          widgets:
+            - label: { text: "OK", text_font: roboto_24, text_color: 0xFFFFFF, align: CENTER }
