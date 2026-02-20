@@ -1,127 +1,128 @@
 # fonts.yaml - Font definitions with Material Design Icons
 # Expanded for 7B: added roboto_28, mdi_56 for better use of larger screen
 
-# ── Roboto Regular ────────────────────────────────────────────────────────────
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_36
-  size: 36
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+font:
+  # ── Roboto Regular ────────────────────────────────────────────────────────────
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_36
+    size: 36
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_32
-  size: 32
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_32
+    size: 32
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_28
-  size: 28
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_28
+    size: 28
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_24
-  size: 24
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_24
+    size: 24
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_20
-  size: 20
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_20
+    size: 20
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_16
-  size: 16
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_16
+    size: 16
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_14
-  size: 14
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_14
+    size: 14
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-- file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
-  id: roboto_12
-  size: 12
-  bpp: 4
-  glyphs: |
-    !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
+  - file: "https://github.com/google/fonts/raw/main/apache/roboto/static/Roboto-Regular.ttf"
+    id: roboto_12
+    size: 12
+    bpp: 4
+    glyphs: |
+      !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
-# ── Material Design Icons 56px (headline icons - new for 7B) ─────────────────
-- file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_56
-  size: 56
-  bpp: 4
-  glyphs:
-    - "\U000F0341" # shield-lock
-    - "\U000F0340" # shield-off
-    - "\U000F0483" # shield-half-full
-    - "\U000F02DC" # home-lock
-    - "\U000F02DD" # home-outline
-    - "\U000F081D" # door
-    - "\U000F081E" # door-open
-    - "\U000F033E" # lock
-    - "\U000F033F" # lock-open
-    - "\U000F0335" # lightbulb
-    - "\U000F0769" # lightbulb-on
-    - "\U000F0336" # lightbulb-off
-    - "\U000F0594" # weather-night
-    - "\U000F050F" # thermometer
-    - "\U000F0051" # airplane
-    - "\U000F12D3" # garage
-    - "\U000F12D4" # garage-open
-    - "\U000F0249" # text-box
-    - "\U000F0493" # alert-circle
-    - "\U000F059D" # weather-sunny
-    - "\U000F0F55" # home-thermometer
+  # ── Material Design Icons 56px (headline icons - new for 7B) ─────────────────
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_56
+    size: 56
+    bpp: 4
+    glyphs:
+      - "\U000F0341" # shield-lock
+      - "\U000F0340" # shield-off
+      - "\U000F0483" # shield-half-full
+      - "\U000F02DC" # home-lock
+      - "\U000F02DD" # home-outline
+      - "\U000F081D" # door
+      - "\U000F081E" # door-open
+      - "\U000F033E" # lock
+      - "\U000F033F" # lock-open
+      - "\U000F0335" # lightbulb
+      - "\U000F0769" # lightbulb-on
+      - "\U000F0336" # lightbulb-off
+      - "\U000F0594" # weather-night
+      - "\U000F050F" # thermometer
+      - "\U000F0051" # airplane
+      - "\U000F12D3" # garage
+      - "\U000F12D4" # garage-open
+      - "\U000F0249" # text-box
+      - "\U000F0493" # alert-circle
+      - "\U000F059D" # weather-sunny
+      - "\U000F0F55" # home-thermometer
 
-# ── Material Design Icons 48px (standard) ────────────────────────────────────
-- file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_48
-  size: 48
-  bpp: 4
-  glyphs:
-    - "\U000F0341" # shield-lock
-    - "\U000F0340" # shield-off
-    - "\U000F0483" # shield-half-full
-    - "\U000F02DC" # home-lock
-    - "\U000F02DD" # home-outline
-    - "\U000F081D" # door
-    - "\U000F081E" # door-open
-    - "\U000F033E" # lock
-    - "\U000F033F" # lock-open
-    - "\U000F0335" # lightbulb
-    - "\U000F0769" # lightbulb-on
-    - "\U000F0336" # lightbulb-off
-    - "\U000F0594" # weather-night
-    - "\U000F050F" # thermometer
-    - "\U000F0051" # airplane
-    - "\U000F12D3" # garage
-    - "\U000F12D4" # garage-open
-    - "\U000F0249" # text-box
-    - "\U000F0493" # alert-circle
-    - "\U000F059D" # weather-sunny
-    - "\U000F0F55" # home-thermometer
+  # ── Material Design Icons 48px (standard) ────────────────────────────────────
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_48
+    size: 48
+    bpp: 4
+    glyphs:
+      - "\U000F0341" # shield-lock
+      - "\U000F0340" # shield-off
+      - "\U000F0483" # shield-half-full
+      - "\U000F02DC" # home-lock
+      - "\U000F02DD" # home-outline
+      - "\U000F081D" # door
+      - "\U000F081E" # door-open
+      - "\U000F033E" # lock
+      - "\U000F033F" # lock-open
+      - "\U000F0335" # lightbulb
+      - "\U000F0769" # lightbulb-on
+      - "\U000F0336" # lightbulb-off
+      - "\U000F0594" # weather-night
+      - "\U000F050F" # thermometer
+      - "\U000F0051" # airplane
+      - "\U000F12D3" # garage
+      - "\U000F12D4" # garage-open
+      - "\U000F0249" # text-box
+      - "\U000F0493" # alert-circle
+      - "\U000F059D" # weather-sunny
+      - "\U000F0F55" # home-thermometer
 
-# ── Material Design Icons 28px (nav bar) ─────────────────────────────────────
-- file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
-  id: mdi_28
-  size: 28
-  bpp: 4
-  glyphs:
-    - "\U000F02DC" # home-lock (status)
-    - "\U000F0341" # shield-lock (alarm)
-    - "\U000F033E" # lock (locks)
-    - "\U000F0335" # lightbulb (lights)
-    - "\U000F0249" # text-box (logs)
+  # ── Material Design Icons 28px (nav bar) ─────────────────────────────────────
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_28
+    size: 28
+    bpp: 4
+    glyphs:
+      - "\U000F02DC" # home-lock (status)
+      - "\U000F0341" # shield-lock (alarm)
+      - "\U000F033E" # lock (locks)
+      - "\U000F0335" # lightbulb (lights)
+      - "\U000F0249" # text-box (logs)

@@ -1,0 +1,2 @@
+# Wrapper for update_intervals.yaml — makes the raw list usable as a package
+interval: !include update_intervals.yaml

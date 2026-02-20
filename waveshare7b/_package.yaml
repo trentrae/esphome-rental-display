@@ -1,37 +1,26 @@
-# _package.yaml - Remote package entry point for esphome-rental-display
+# _package.yaml - Remote package reference for esphome-rental-display
 # Waveshare ESP32-S3-Touch-LCD-7B | 1024x600
 #
-# Reference this single file from each property's local ESPHome yaml:
+# NOTE: ESPHome does NOT recursively process a `packages:` block found inside
+# a remotely-fetched file. Use `files:` (plural) in your local yaml instead,
+# listing each file individually. This file is kept for reference only.
+#
+# Correct usage in your local esphome.yaml (ESPHome 2026.2.0+):
 #
 #   packages:
-#     remote_package:
-#       url: https://github.com/trentrae/esphome-rental-display
+#     - url: https://github.com/trentrae/esphome-rental-display
 #       ref: main
-#       file: waveshare7b/_package.yaml
-#       refresh: 1d
+#       files:
+#         - waveshare7b/device.yaml
+#         - waveshare7b/common.yaml
+#         - waveshare7b/substitutions.yaml
+#         - waveshare7b/layouts/fonts.yaml
+#         - waveshare7b/layouts/colors.yaml
+#         - waveshare7b/layouts/main.yaml
+#         - waveshare7b/layouts/update_intervals_pkg.yaml
+#       refresh: 0s
 #
-# Your local yaml must define:
+# Your local yaml must also define:
 #   - esphome: (name, friendly_name)
-#   - substitutions: (all entity IDs and property_name)
-#   - wifi:
-#   - api:
-#   - ota:
-#   - logger:
-#
-# Required substitutions (must be present in your local yaml):
-#   property_name, living_room_light, kitchen_light, outdoor_light,
-#   front_door_lock, back_door_lock, south_garage_door,
-#   front_door_sensor, back_door_sensor, south_garage_sensor,
-#   alarm_panel, outside_temp, inside_temp
-
-packages:
-  pkg_common:         !include common.yaml
-  pkg_lvgl_main:      !include layouts/main.yaml
-  pkg_lvgl_fonts:     !include layouts/fonts.yaml
-  pkg_lvgl_colors:    !include layouts/colors.yaml
-  pkg_lvgl_intervals: !include layouts/update_intervals.yaml
-  pkg_page_status:    !include layouts/pages/main_status.yaml
-  pkg_page_alarm:     !include layouts/pages/alarm_control.yaml
-  pkg_page_locks:     !include layouts/pages/locks_doors.yaml
-  pkg_page_lights:    !include layouts/pages/lighting_control.yaml
-  pkg_page_logs:      !include layouts/pages/access_logs.yaml
+#   - substitutions: (see substitutions.yaml.example for all required keys)
+#   - wifi:, api:, ota:, logger:

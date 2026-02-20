@@ -139,7 +139,7 @@
           return "";
 
     # ═══════════════════════════════════════════════════════════
-    # Open Sensors Warning (Status Page + Alarm Page shared card)
+    # Open Sensors Warning (Status Page + Alarm Page)
     # ═══════════════════════════════════════════════════════════
     - lambda: |-
         bool has_open = false;
@@ -157,7 +157,7 @@
           has_open = true; list += "Back Unlocked";
         }
 
-        // Status page warning card
+        // Status page warning card (hidden when all secured)
         auto show_call = id(open_sensors_warning).make_call();
         show_call.set_hidden(!has_open);
         show_call.perform();
@@ -170,7 +170,7 @@
 
     # Alarm page sensor status card (always visible - shows "All Secured" or list)
     - lvgl.label.update:
-        id: open_sensors_list
+        id: alarm_sensors_list
         text: !lambda |-
           std::string list = "";
           if (id(garage_door_open).has_state() && id(garage_door_open).state) list += "Garage  ";

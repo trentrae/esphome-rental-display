@@ -368,6 +368,14 @@
                 service: light.turn_off
                 data:
                   entity_id: ${living_room_light}
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${kitchen_light}
+            - homeassistant.service:
+                service: light.turn_off
+                data:
+                  entity_id: ${outdoor_light}
           widgets:
             - label:
                 text: "\U000F0336"

@@ -1,6 +1,9 @@
 # ESPHome Rental Property Display - Waveshare ESP32-S3-Touch-LCD-7B
 # 1024x600 landscape | Dark theme | Alarmo integration
-# https://github.com/YOUR_USERNAME/esphome-rental-display
+# https://github.com/trentrae/esphome-rental-display
+#
+# This file is the LOCAL entry point for direct flashing (non-remote-package).
+# For remote package usage, see _package.yaml.
 
 esphome:
   name: rental-display-7b
@@ -10,6 +13,10 @@ packages:
   - !include device.yaml
   - !include common.yaml
   - !include substitutions.yaml
+  - !include layouts/main.yaml
+  - !include layouts/fonts.yaml
+  - !include layouts/colors.yaml
+  - !include layouts/update_intervals_pkg.yaml
 
 wifi:
   ssid: !secret wifi_ssid

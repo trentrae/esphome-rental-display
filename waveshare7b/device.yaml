@@ -1,5 +1,14 @@
 # device.yaml - Waveshare ESP32-S3-Touch-LCD-7B
-# Resolution: 1024x600 | ST7701 RGB Parallel | GT911 Touch | I2C: GPIO8/9
+# Resolution: 1024x600 | ST7262E43 RGB Parallel | GT911 Touch
+#
+# ⚠️  PIN SHARING NOTE: On the 7B, GPIO4/8/9 are shared between the I2C touch
+#     bus and the RGB data bus. ESPHome can't use the same GPIO for two
+#     peripherals simultaneously. The workaround:
+#       - GT911 runs in POLLING mode (no interrupt_pin) to free GPIO4 for display.
+#       - I2C SDA/SCL are set to GPIO19/GPIO20 which are free on most 7B revisions.
+#       - If your board revision wires touch I2C to GPIO8/9, you may need to
+#         remove B0 and B3 from data_pins (reduces blue depth to 3 bits).
+#     Verify your specific board revision against the Waveshare schematic.
 #
 # ⚠️  BACKLIGHT NOTE: The 7B uses a CH32V003 MCU to control backlight/brightness.
 #     ESPHome has no native driver for it yet (feature request #3202 open as of 2025).
@@ -26,22 +35,20 @@ psram:
   speed: 80MHz
 
 # I2C for GT911 touch controller
+# ⚠️  If your board rev wires touch I2C to GPIO8/9 instead of GPIO19/20,
+#     change sda/scl below and remove GPIO8 & GPIO9 from the display data_pins.
 i2c:
   - id: i2c_touch
-    sda: GPIO8
-    scl: GPIO9
+    sda: GPIO19
+    scl: GPIO20
     frequency: 400kHz
 
-# GT911 Capacitive Touch
+# GT911 Capacitive Touch (polling mode - no interrupt_pin to avoid GPIO4 conflict)
 touchscreen:
   - platform: gt911
     id: my_touch
     i2c_id: i2c_touch
-    interrupt_pin: GPIO4
     reset_pin: GPIO38
-    on_touch:
-      - lambda: |-
-          ESP_LOGI("touch", "Touch at (%d, %d)", touch.x, touch.y);
 
 # RGB Parallel Display - ST7701 1024x600
 display:
@@ -83,10 +90,10 @@ display:
         - GPIO7    # G2
         - GPIO15   # G3
         - GPIO16   # G4
-        - GPIO4    # G5
+        - GPIO4    # G5 (freed by using polling-mode touch)
       blue:
-        - GPIO8    # B0 (shared with I2C SDA - check your board rev!)
+        - GPIO8    # B0
         - GPIO3    # B1
         - GPIO46   # B2
-        - GPIO9    # B3 (shared with I2C SCL - check your board rev!)
+        - GPIO9    # B3
         - GPIO1    # B4

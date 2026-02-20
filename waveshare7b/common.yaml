@@ -20,16 +20,18 @@ globals:
     initial_value: '0'
 
 # Screen saver - pause LVGL after 5 minutes of inactivity
-# Touch screen to wake. Adjust interval as needed.
+# Touch screen to wake (handled by lvgl.on_touch in main.yaml).
 interval:
   - interval: 1s
     then:
       - lambda: |-
           id(idle_seconds) += 1;
-          if (id(idle_seconds) >= 300) {  // 5 minutes
-            id(idle_seconds) = 0;
-            // lvgl.pause handled via on_idle below
-          }
+      - if:
+          condition:
+            lambda: 'return id(idle_seconds) >= 300;'
+          then:
+            - lambda: 'id(idle_seconds) = 0;'
+            - lvgl.pause:
 
 sensor:
   - platform: wifi_signal
@@ -61,16 +63,16 @@ text_sensor:
     internal: true
 
 binary_sensor:
+  # Light entities: HA state is "on"/"off" which maps directly to binary_sensor true/false
   - platform: homeassistant
     id: living_room_light_state
     entity_id: ${living_room_light}
-    attribute: is_on
     internal: true
 
+  # Lock entities: HA state is "locked"/"unlocked" — need publish_initial_state
   - platform: homeassistant
     id: front_door_locked
     entity_id: ${front_door_lock}
-    attribute: is_locked
     internal: true
 
   - platform: homeassistant
@@ -91,19 +93,16 @@ binary_sensor:
   - platform: homeassistant
     id: back_door_locked
     entity_id: ${back_door_lock}
-    attribute: is_locked
     internal: true
 
   - platform: homeassistant
     id: kitchen_light_state
     entity_id: ${kitchen_light}
-    attribute: is_on
     internal: true
 
   - platform: homeassistant
     id: outdoor_light_state
     entity_id: ${outdoor_light}
-    attribute: is_on
     internal: true
 
 script:

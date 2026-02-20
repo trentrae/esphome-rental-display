@@ -57,9 +57,9 @@
                 align: BOTTOM_MID
                 y: -6
 
-      # ── Open Sensors Warning ─────────────────────────────────────────────────
+      # ── Open Sensors Warning (alarm page copy) ──────────────────────────────
       - obj:
-          id: open_sensors_warning
+          id: alarm_sensors_warning
           x: 644
           y: 12
           width: 368
@@ -76,7 +76,7 @@
                 text_color: 0x8E8E93
                 align: TOP_MID
             - label:
-                id: open_sensors_list
+                id: alarm_sensors_list
                 text: "All Secured"
                 text_font: roboto_20
                 text_color: 0x30D158
