@@ -61,15 +61,9 @@ display:
     dimensions:
       width: 1024
       height: 600
-    de_pin:
-      number: GPIO40
-      ignore_strapping_warning: true
-    hsync_pin:
-      number: GPIO39
-      ignore_strapping_warning: true
-    vsync_pin:
-      number: GPIO41
-      ignore_strapping_warning: true
+    de_pin: GPIO40
+    hsync_pin: GPIO39
+    vsync_pin: GPIO41
     pclk_pin: GPIO42
     hsync_back_porch: 8
     hsync_front_porch: 8
