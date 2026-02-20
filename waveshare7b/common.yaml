@@ -1,5 +1,5 @@
 # common.yaml - Sensors, Scripts, Global Variables
-# Includes auto screen-saver via lvgl.pause (workaround for 7B backlight limitation)
+# Screen-saver dims backlight after 5 min idle, touch wakes (handled in device.yaml)
 
 time:
   - platform: homeassistant
@@ -19,8 +19,8 @@ globals:
     type: int
     initial_value: '0'
 
-# Screen saver - pause LVGL after 5 minutes of inactivity
-# Touch screen to wake (handled by lvgl.on_touch in main.yaml).
+# Screen saver - pause LVGL and dim backlight after 5 minutes of inactivity
+# Touch screen to wake (handled by touchscreen on_touch in device.yaml).
 interval:
   - interval: 1s
     then:
@@ -32,6 +32,7 @@ interval:
           then:
             - lambda: 'id(idle_seconds) = 0;'
             - lvgl.pause:
+            - light.turn_off: display_backlight
 
 sensor:
   - platform: wifi_signal

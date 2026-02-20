@@ -1,19 +1,7 @@
 # device.yaml - Waveshare ESP32-S3-Touch-LCD-7B
-# Resolution: 1024x600 | ST7262E43 RGB Parallel | GT911 Touch
-#
-# ⚠️  PIN SHARING NOTE: On the 7B, GPIO4/8/9 are shared between the I2C touch
-#     bus and the RGB data bus. ESPHome can't use the same GPIO for two
-#     peripherals simultaneously. The workaround:
-#       - GT911 runs in POLLING mode (no interrupt_pin) to free GPIO4 for display.
-#       - I2C SDA/SCL are set to GPIO19/GPIO20 which are free on most 7B revisions.
-#       - If your board revision wires touch I2C to GPIO8/9, you may need to
-#         remove B0 and B3 from data_pins (reduces blue depth to 3 bits).
-#     Verify your specific board revision against the Waveshare schematic.
-#
-# ⚠️  BACKLIGHT NOTE: The 7B uses a CH32V003 MCU to control backlight/brightness.
-#     ESPHome has no native driver for it yet (feature request #3202 open as of 2025).
-#     The display will work at full brightness. Use lvgl.pause on a timer for
-#     screen-saver / anti-burn protection instead.
+# Resolution: 1024x600 | RGB Parallel | GT911 Touch
+# Pin assignments and backlight control based on working reference:
+#   github.com/agillis/esphome-modular-lvgl-buttons
 
 esp32:
   board: esp32-s3-devkitc-1
@@ -34,21 +22,81 @@ psram:
   mode: octal
   speed: 80MHz
 
-# I2C for GT911 touch controller
-# ⚠️  If your board rev wires touch I2C to GPIO8/9 instead of GPIO19/20,
-#     change sda/scl below and remove GPIO8 & GPIO9 from the display data_pins.
-i2c:
-  - id: i2c_touch
-    sda: GPIO19
-    scl: GPIO20
-    frequency: 400kHz
+preferences:
+  flash_write_interval: 5min
 
-# GT911 Capacitive Touch (polling mode - no interrupt_pin to avoid GPIO4 conflict)
+# -------------------------------------------
+# IO Extender - CH32V003 (backlight, resets)
+# -------------------------------------------
+external_components:
+  - source: github://pr#10071
+    components: [waveshare_io_ch32v003]
+    refresh: 1h
+
+waveshare_io_ch32v003:
+  - id: waveshare_io_hub
+
+# -------------------------------------------
+# LCD Backlight (via IO expander)
+# -------------------------------------------
+output:
+  - platform: waveshare_io_ch32v003
+    id: backlight_output
+
+  - platform: waveshare_io_ch32v003
+    id: pwm_backlight_output
+    inverted: true
+    min_power: 0.03
+    max_power: 1.0
+
+switch:
+  - platform: gpio
+    internal: true
+    id: exio2
+    restore_mode: ALWAYS_ON
+    pin:
+      waveshare_io_ch32v003: waveshare_io_hub
+      number: 2
+      mode:
+        output: true
+
+light:
+  - platform: monochromatic
+    output: pwm_backlight_output
+    name: Display Backlight
+    icon: mdi:lightbulb-on
+    id: display_backlight
+    restore_mode: ALWAYS_ON
+    default_transition_length: 250ms
+    on_turn_on:
+      then:
+        - switch.turn_on: exio2
+    on_turn_off:
+      then:
+        - switch.turn_off: exio2
+
+# -------------------------------------------
+# I2C bus (GT911 touch + IO expander)
+# -------------------------------------------
+i2c:
+  - id: bus_a
+    sda: GPIO08
+    scl: GPIO09
+    scan: true
+
+# -------------------------------------------
+# GT911 Capacitive Touchscreen
+# -------------------------------------------
 touchscreen:
   - platform: gt911
     id: my_touch
-    i2c_id: i2c_touch
-    reset_pin: GPIO38
+    display: my_display
+    i2c_id: bus_a
+    interrupt_pin: GPIO4
+    reset_pin:
+      waveshare_io_ch32v003: waveshare_io_hub
+      number: 1
+      mode: OUTPUT
     on_touch:
       - lambda: |-
           id(idle_seconds) = 0;
@@ -58,8 +106,11 @@ touchscreen:
           then:
             - lvgl.resume:
             - lvgl.widget.redraw:
+            - light.turn_on: display_backlight
 
-# RGB Parallel Display - ST7701 1024x600
+# -------------------------------------------
+# RGB Parallel Display - 1024x600
+# -------------------------------------------
 display:
   - platform: rpi_dpi_rgb
     id: my_display
@@ -67,36 +118,45 @@ display:
     update_interval: never
     color_order: RGB
     pclk_frequency: 30MHz
+    pclk_inverted: true
     dimensions:
       width: 1024
       height: 600
-    de_pin: GPIO40
-    hsync_pin: GPIO39
-    vsync_pin: GPIO41
-    pclk_pin: GPIO42
-    hsync_back_porch: 8
-    hsync_front_porch: 8
-    hsync_pulse_width: 4
-    vsync_back_porch: 8
-    vsync_front_porch: 8
-    vsync_pulse_width: 4
+    de_pin:
+      number: 5
+    hsync_pin:
+      number: 46
+      ignore_strapping_warning: true
+    vsync_pin:
+      number: 3
+      ignore_strapping_warning: true
+    pclk_pin: 7
+    reset_pin:
+      waveshare_io_ch32v003: waveshare_io_hub
+      number: 3
+    hsync_back_porch: 152
+    hsync_front_porch: 48
+    hsync_pulse_width: 162
+    vsync_back_porch: 13
+    vsync_front_porch: 3
+    vsync_pulse_width: 45
     data_pins:
       red:
-        - GPIO45   # R0
-        - GPIO48   # R1
-        - GPIO47   # R2
-        - GPIO21   # R3
-        - GPIO14   # R4
+        - 1         # R3
+        - 2         # R4
+        - 42        # R5
+        - 41        # R6
+        - 40        # R7
       green:
-        - GPIO5    # G0
-        - GPIO6    # G1
-        - GPIO7    # G2
-        - GPIO15   # G3
-        - GPIO16   # G4
-        - GPIO4    # G5 (freed by using polling-mode touch)
+        - 39        # G2
+        - 0         # G3
+        - 45        # G4
+        - 48        # G5
+        - 47        # G6
+        - 21        # G7
       blue:
-        - GPIO8    # B0
-        - GPIO3    # B1
-        - GPIO46   # B2
-        - GPIO9    # B3
-        - GPIO1    # B4
+        - 14        # B3
+        - 38        # B4
+        - 18        # B5
+        - 17        # B6
+        - 10        # B7
