@@ -7,56 +7,56 @@ font:
     id: roboto_36
     size: 36
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_32
     size: 32
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_28
     size: 28
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_24
     size: 24
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_20
     size: 20
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_16
     size: 16
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_14
     size: 14
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   - file: "https://github.com/google/fonts/raw/main/ofl/roboto/Roboto%5Bwdth%2Cwght%5D.ttf"
     id: roboto_12
     size: 12
     bpp: 4
-    glyphs: |
+    glyphs: |-
       !"%()+=,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz'/&@#?
 
   # ── Material Design Icons 56px (headline icons - new for 7B) ─────────────────
