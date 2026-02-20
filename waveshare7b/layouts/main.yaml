@@ -10,16 +10,6 @@ lvgl:
   update_interval: 1s
   byte_order: big_endian
 
-  on_touch:
-    - lambda: |-
-        id(idle_seconds) = 0;
-    - if:
-        condition:
-          lvgl.is_paused:
-        then:
-          - lvgl.resume:
-          - lvgl.widget.redraw:
-
   theme:
     obj:
       bg_color: 0x1C1C1E

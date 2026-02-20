@@ -49,6 +49,15 @@ touchscreen:
     id: my_touch
     i2c_id: i2c_touch
     reset_pin: GPIO38
+    on_touch:
+      - lambda: |-
+          id(idle_seconds) = 0;
+      - if:
+          condition:
+            lvgl.is_paused:
+          then:
+            - lvgl.resume:
+            - lvgl.widget.redraw:
 
 # RGB Parallel Display - ST7701 1024x600
 display:
