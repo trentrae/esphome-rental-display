@@ -82,157 +82,172 @@
                 text_color: 0x30D158
                 align: CENTER
 
-      # ── Arm Mode Buttons Row 1 ────────────────────────────────────────────────
+      # ── Arm Mode Buttons Container (hidden when armed) ─────────────────────
       - obj:
+          id: arm_buttons_container
           x: 12
           y: 158
-          width: 313
-          height: 120
-          bg_color: 0x30D158
+          width: 1000
+          height: 260
+          bg_opa: TRANSP
           border_width: 0
-          radius: 16
-          clickable: true
-          on_click:
-            - lambda: |-
-                id(pending_action) = "arm_away";
-                id(entered_code) = "";
-            - lvgl.widget.show: keypad_popup
+          pad_all: 0
+          scrollable: false
           widgets:
-            - label:
-                text: "\U000F0341"
-                text_font: mdi_56
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: -16
-            - label:
-                text: "ARM AWAY"
-                text_font: roboto_20
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: 32
+            # Row 1
+            - obj:
+                x: 0
+                y: 0
+                width: 313
+                height: 120
+                bg_color: 0x30D158
+                border_width: 0
+                radius: 16
+                clickable: true
+                on_click:
+                  - lambda: |-
+                      id(pending_action) = "arm_away";
+                      id(entered_code) = "";
+                  - lvgl.widget.show: keypad_popup
+                widgets:
+                  - label:
+                      text: "\U000F0341"
+                      text_font: mdi_56
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: -16
+                  - label:
+                      text: "ARM AWAY"
+                      text_font: roboto_20
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: 32
 
-      - obj:
-          x: 341
-          y: 158
-          width: 313
-          height: 120
-          bg_color: 0x0A84FF
-          border_width: 0
-          radius: 16
-          clickable: true
-          on_click:
-            - lambda: |-
-                id(pending_action) = "arm_home";
-                id(entered_code) = "";
-            - lvgl.widget.show: keypad_popup
-          widgets:
-            - label:
-                text: "\U000F02DC"
-                text_font: mdi_56
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: -16
-            - label:
-                text: "ARM HOME"
-                text_font: roboto_20
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: 32
+            - obj:
+                x: 329
+                y: 0
+                width: 313
+                height: 120
+                bg_color: 0x0A84FF
+                border_width: 0
+                radius: 16
+                clickable: true
+                on_click:
+                  - lambda: |-
+                      id(pending_action) = "arm_home";
+                      id(entered_code) = "";
+                  - lvgl.widget.show: keypad_popup
+                widgets:
+                  - label:
+                      text: "\U000F02DC"
+                      text_font: mdi_56
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: -16
+                  - label:
+                      text: "ARM HOME"
+                      text_font: roboto_20
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: 32
 
-      - obj:
-          x: 670
-          y: 158
-          width: 342
-          height: 120
-          bg_color: 0xBF5AF2
-          border_width: 0
-          radius: 16
-          clickable: true
-          on_click:
-            - lambda: |-
-                id(pending_action) = "arm_night";
-                id(entered_code) = "";
-            - lvgl.widget.show: keypad_popup
-          widgets:
-            - label:
-                text: "\U000F0594"
-                text_font: mdi_56
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: -16
-            - label:
-                text: "ARM NIGHT"
-                text_font: roboto_20
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: 32
+            - obj:
+                x: 658
+                y: 0
+                width: 342
+                height: 120
+                bg_color: 0xBF5AF2
+                border_width: 0
+                radius: 16
+                clickable: true
+                on_click:
+                  - lambda: |-
+                      id(pending_action) = "arm_night";
+                      id(entered_code) = "";
+                  - lvgl.widget.show: keypad_popup
+                widgets:
+                  - label:
+                      text: "\U000F0594"
+                      text_font: mdi_56
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: -16
+                  - label:
+                      text: "ARM NIGHT"
+                      text_font: roboto_20
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: 32
 
-      # ── Arm Mode Buttons Row 2 ────────────────────────────────────────────────
+            # Row 2
+            - obj:
+                x: 0
+                y: 134
+                width: 313
+                height: 120
+                bg_color: 0xFF9F0A
+                border_width: 0
+                radius: 16
+                clickable: true
+                on_click:
+                  - lambda: |-
+                      id(pending_action) = "arm_vacation";
+                      id(entered_code) = "";
+                  - lvgl.widget.show: keypad_popup
+                widgets:
+                  - label:
+                      text: "\U000F0051"
+                      text_font: mdi_56
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: -16
+                  - label:
+                      text: "VACATION"
+                      text_font: roboto_20
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: 32
+
+            - obj:
+                x: 329
+                y: 134
+                width: 671
+                height: 120
+                bg_color: 0x3A3A3C
+                border_width: 0
+                radius: 16
+                clickable: true
+                on_click:
+                  - lambda: |-
+                      id(pending_action) = "arm_custom_bypass";
+                      id(entered_code) = "";
+                  - lvgl.widget.show: keypad_popup
+                widgets:
+                  - label:
+                      text: "\U000F0483"
+                      text_font: mdi_56
+                      text_color: 0xFFFFFF
+                      align: CENTER
+                      y: -16
+                  - label:
+                      text: "CUSTOM BYPASS"
+                      text_font: roboto_20
+                      text_color: 0xEBEBF5
+                      align: CENTER
+                      y: 32
+
+      # ── Big DISARM Button (shown when armed, hidden when disarmed) ──────────
       - obj:
+          id: disarm_big_button
           x: 12
-          y: 292
-          width: 313
-          height: 120
-          bg_color: 0xFF9F0A
-          border_width: 0
-          radius: 16
-          clickable: true
-          on_click:
-            - lambda: |-
-                id(pending_action) = "arm_vacation";
-                id(entered_code) = "";
-            - lvgl.widget.show: keypad_popup
-          widgets:
-            - label:
-                text: "\U000F0051"
-                text_font: mdi_56
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: -16
-            - label:
-                text: "VACATION"
-                text_font: roboto_20
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: 32
-
-      - obj:
-          x: 341
-          y: 292
-          width: 313
-          height: 120
-          bg_color: 0x3A3A3C
-          border_width: 0
-          radius: 16
-          clickable: true
-          on_click:
-            - lambda: |-
-                id(pending_action) = "arm_custom_bypass";
-                id(entered_code) = "";
-            - lvgl.widget.show: keypad_popup
-          widgets:
-            - label:
-                text: "\U000F0483"
-                text_font: mdi_56
-                text_color: 0xFFFFFF
-                align: CENTER
-                y: -16
-            - label:
-                text: "CUSTOM"
-                text_font: roboto_20
-                text_color: 0xEBEBF5
-                align: CENTER
-                y: 32
-
-      - obj:
-          x: 670
-          y: 292
-          width: 342
-          height: 120
+          y: 158
+          width: 1000
+          height: 260
           bg_color: 0xFF453A
           border_width: 0
-          radius: 16
+          radius: 20
           clickable: true
+          hidden: true
           on_click:
             - lambda: |-
                 id(pending_action) = "disarm";
@@ -244,13 +259,13 @@
                 text_font: mdi_56
                 text_color: 0xFFFFFF
                 align: CENTER
-                y: -16
+                y: -20
             - label:
                 text: "DISARM"
-                text_font: roboto_20
+                text_font: roboto_36
                 text_color: 0xFFFFFF
                 align: CENTER
-                y: 32
+                y: 36
 
 # ── Bottom Navigation ──────────────────────────────────────────────────────────
 - obj:

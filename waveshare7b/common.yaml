@@ -45,6 +45,10 @@ sensor:
     id: outside_temp_sensor
     entity_id: ${outside_temp}
     internal: true
+    on_value:
+      - lambda: |-
+          char buf[10]; snprintf(buf, sizeof(buf), "%.0f°F", x);
+          lv_label_set_text(id(outside_temp_main), buf);
 
   - platform: homeassistant
     id: alarm_delay_time
@@ -56,57 +60,195 @@ sensor:
     id: inside_temp_sensor
     entity_id: ${inside_temp}
     internal: true
+    on_value:
+      - lambda: |-
+          char buf[10]; snprintf(buf, sizeof(buf), "%.0f°F", x);
+          lv_label_set_text(id(inside_temp_main), buf);
 
 text_sensor:
   - platform: homeassistant
     id: alarm_state
     entity_id: ${alarm_panel}
     internal: true
+    on_value:
+      - lambda: |-
+          lv_color_t green  = lv_color_hex(0x30D158);
+          lv_color_t gray   = lv_color_hex(0x8E8E93);
+          lv_color_t orange = lv_color_hex(0xFF9F0A);
+          lv_color_t red    = lv_color_hex(0xFF453A);
+          const char* label = "Unknown";
+          lv_color_t color = gray;
+          if (x == "disarmed") { label = "DISARMED"; color = gray; }
+          else if (x == "armed_away") { label = "ARMED AWAY"; color = green; }
+          else if (x == "armed_home") { label = "ARMED HOME"; color = green; }
+          else if (x == "armed_night") { label = "ARMED NIGHT"; color = green; }
+          else if (x == "armed_vacation") { label = "ARMED VACATION"; color = green; }
+          else if (x == "armed_custom_bypass") { label = "ARMED CUSTOM"; color = green; }
+          else if (x == "pending") { label = "ARMING..."; color = orange; }
+          else if (x == "triggered") { label = "TRIGGERED!"; color = red; }
+          lv_label_set_text(id(alarm_status_main), label);
+          lv_obj_set_style_text_color(id(alarm_status_main), color, 0);
+          lv_label_set_text(id(alarm_status_detail), label);
+          lv_obj_set_style_text_color(id(alarm_status_detail), color, 0);
+          // Clear countdown if not pending
+          if (x != "pending") {
+            lv_label_set_text(id(alarm_countdown_detail), "");
+            lv_label_set_text(id(alarm_countdown_main), "");
+          }
+          // Toggle arm buttons vs big disarm button
+          if (x == "disarmed") {
+            lv_obj_clear_flag(id(arm_buttons_container), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(id(disarm_big_button), LV_OBJ_FLAG_HIDDEN);
+          } else {
+            lv_obj_add_flag(id(arm_buttons_container), LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(id(disarm_big_button), LV_OBJ_FLAG_HIDDEN);
+          }
 
 binary_sensor:
-  # Light entities: HA state is "on"/"off" which maps directly to binary_sensor true/false
+  # Light entities
   - platform: homeassistant
     id: living_room_light_state
     entity_id: ${living_room_light}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          const char* t = x ? "ON" : "OFF";
+          lv_label_set_text(id(living_room_main), t);
+          lv_obj_set_style_text_color(id(living_room_main), c, 0);
+          lv_obj_set_style_text_color(id(living_room_icon_main), c, 0);
+          lv_label_set_text(id(living_room_toggle_text), t);
+          lv_obj_set_style_text_color(id(living_room_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(living_room_light_icon), c, 0);
 
-  # Lock entities: HA state is "locked"/"unlocked" — need publish_initial_state
+  # Lock entities
   - platform: homeassistant
     id: front_door_locked
     entity_id: ${front_door_lock}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
+          const char* t = x ? "Locked" : "Unlocked";
+          lv_label_set_text(id(front_door_main), t);
+          lv_obj_set_style_text_color(id(front_door_main), c, 0);
+          lv_obj_set_style_text_color(id(front_door_icon_main), c, 0);
+          lv_label_set_text(id(front_door_status_locks), t);
+          lv_obj_set_style_text_color(id(front_door_status_locks), c, 0);
+          lv_obj_set_style_text_color(id(front_door_icon_locks), c, 0);
+      - script.execute: update_security_status
 
   - platform: homeassistant
     id: garage_door_open
     entity_id: ${south_garage_sensor}
     internal: true
+    on_state:
+      - lambda: |-
+          const char* icon = x ? "\U000F12D4" : "\U000F12D3";
+          lv_color_t c = x ? lv_color_hex(0xFF9F0A) : lv_color_hex(0x30D158);
+          const char* t = x ? "Open" : "Closed";
+          lv_label_set_text(id(garage_icon_main), icon);
+          lv_obj_set_style_text_color(id(garage_icon_main), c, 0);
+          lv_label_set_text(id(garage_status_main), t);
+          lv_obj_set_style_text_color(id(garage_status_main), c, 0);
+          lv_label_set_text(id(garage_icon_locks), icon);
+          lv_obj_set_style_text_color(id(garage_icon_locks), c, 0);
+          lv_label_set_text(id(garage_status_locks), t);
+          lv_obj_set_style_text_color(id(garage_status_locks), c, 0);
+          lv_label_set_text(id(garage_quick_icon), icon);
+          lv_obj_set_style_text_color(id(garage_quick_icon), c, 0);
+      - script.execute: update_security_status
 
   - platform: homeassistant
     id: back_door_sensor_open
     entity_id: ${back_door_sensor}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_label_set_text(id(back_door_sensor_status), x ? "Door OPEN" : "Door Closed");
+          lv_obj_set_style_text_color(id(back_door_sensor_status), x ? lv_color_hex(0xFF453A) : lv_color_hex(0x8E8E93), 0);
+      - script.execute: update_security_status
 
   - platform: homeassistant
     id: front_door_sensor_open
     entity_id: ${front_door_sensor}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_label_set_text(id(front_door_sensor_status), x ? "Door OPEN" : "Door Closed");
+          lv_obj_set_style_text_color(id(front_door_sensor_status), x ? lv_color_hex(0xFF453A) : lv_color_hex(0x8E8E93), 0);
 
   - platform: homeassistant
     id: back_door_locked
     entity_id: ${back_door_lock}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
+          const char* t = x ? "Locked" : "Unlocked";
+          lv_label_set_text(id(back_door_main), t);
+          lv_obj_set_style_text_color(id(back_door_main), c, 0);
+          lv_obj_set_style_text_color(id(back_door_icon_main), c, 0);
+          lv_label_set_text(id(back_door_status_locks), t);
+          lv_obj_set_style_text_color(id(back_door_status_locks), c, 0);
+          lv_obj_set_style_text_color(id(back_door_icon_locks), c, 0);
+      - script.execute: update_security_status
 
   - platform: homeassistant
     id: kitchen_light_state
     entity_id: ${kitchen_light}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(kitchen_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(kitchen_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(kitchen_light_icon), c, 0);
 
   - platform: homeassistant
     id: outdoor_light_state
     entity_id: ${outdoor_light}
     internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(outdoor_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(outdoor_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(outdoor_light_icon), c, 0);
 
 script:
+  # Shared security status recalculation (called by lock/door/garage sensor callbacks)
+  - id: update_security_status
+    then:
+      - lambda: |-
+          lv_color_t green = lv_color_hex(0x30D158);
+          lv_color_t red   = lv_color_hex(0xFF453A);
+          bool has_open = false;
+          std::string list = "";
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "Garage  "; }
+          if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) { has_open = true; list += "Back Door  "; }
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) { has_open = true; list += "Front Unlocked  "; }
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) { has_open = true; list += "Back Unlocked"; }
+          if (has_open) {
+            lv_obj_clear_flag(id(open_sensors_warning), LV_OBJ_FLAG_HIDDEN);
+            lv_label_set_text(id(open_sensors_list), list.c_str());
+          } else {
+            lv_obj_add_flag(id(open_sensors_warning), LV_OBJ_FLAG_HIDDEN);
+          }
+          if (list.empty()) {
+            lv_label_set_text(id(alarm_sensors_list), "All Secured");
+            lv_obj_set_style_text_color(id(alarm_sensors_list), green, 0);
+          } else {
+            lv_label_set_text(id(alarm_sensors_list), list.c_str());
+            lv_obj_set_style_text_color(id(alarm_sensors_list), red, 0);
+          }
+          bool any = false;
+          if (id(front_door_locked).has_state() && !id(front_door_locked).state) any = true;
+          if (id(back_door_locked).has_state() && !id(back_door_locked).state) any = true;
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
+          lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");
+          lv_obj_set_style_text_color(id(security_summary), any ? red : green, 0);
+
   - id: arm_away_script
     then:
       - homeassistant.service:
