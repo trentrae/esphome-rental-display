@@ -414,6 +414,24 @@
           align: TOP_MID
           y: 20
 
+      # X close button (top right)
+      - obj:
+          x: 370
+          y: 10
+          width: 40
+          height: 40
+          bg_opa: TRANSP
+          border_width: 0
+          clickable: true
+          on_click:
+            - lambda: |-
+                id(entered_code) = "";
+                id(pending_action) = "";
+                lv_label_set_text(id(code_display), "_ _ _ _");
+            - lvgl.widget.hide: keypad_popup
+          widgets:
+            - label: { text: "X", text_font: roboto_24, text_color: 0x8E8E93, align: CENTER }
+
       - label:
           id: code_display
           text: "_ _ _ _"
@@ -432,7 +450,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "1";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "1"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "1", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -445,7 +466,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "2";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "2"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "2", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -458,7 +482,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "3";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "3"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "3", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -472,7 +499,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "4";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "4"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "4", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -485,7 +515,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "5";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "5"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "5", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -498,7 +531,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "6";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "6"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "6", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -512,7 +548,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "7";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "7"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "7", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -525,7 +564,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "8";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "8"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "8", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -538,7 +580,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "9";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "9"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "9", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -552,7 +597,9 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: id(entered_code) = "";
+            - lambda: |-
+                id(entered_code) = "";
+                lv_label_set_text(id(code_display), "_ _ _ _");
           widgets:
             - label: { text: "CLR", text_font: roboto_24, text_color: 0xFFFFFF, align: CENTER }
 
@@ -565,7 +612,10 @@
           radius: 14
           clickable: true
           on_click:
-            - lambda: if (id(entered_code).length() < 6) id(entered_code) += "0";
+            - lambda: |-
+                if (id(entered_code).length() < 6) { id(entered_code) += "0"; }
+                std::string d; for (size_t i = 0; i < id(entered_code).length(); i++) d += "* ";
+                lv_label_set_text(id(code_display), d.empty() ? "_ _ _ _" : d.c_str());
           widgets:
             - label: { text: "0", text_font: roboto_36, text_color: 0xFFFFFF, align: CENTER }
 
@@ -588,6 +638,7 @@
                 else if (action == "disarm") id(disarm_script).execute();
                 id(entered_code) = "";
                 id(pending_action) = "";
+                lv_label_set_text(id(code_display), "_ _ _ _");
             - lvgl.widget.hide: keypad_popup
           widgets:
             - label: { text: "OK", text_font: roboto_24, text_color: 0xFFFFFF, align: CENTER }

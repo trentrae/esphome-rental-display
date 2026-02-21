@@ -2,18 +2,10 @@
 # All entity updates are now event-driven via on_value/on_state callbacks in common.yaml
 # Only keypad display + WiFi/clock need polling
 
-# Fast updates: keypad code display (needs instant feedback during typing)
-- interval: 500ms
+# Alarm countdown (only matters during pending state)
+- interval: 1s
   then:
     - lambda: |-
-        // Keypad Code Display
-        std::string code = id(entered_code);
-        std::string display = "";
-        for (size_t i = 0; i < code.length() && i < 6; i++) display += "* ";
-        if (display.empty()) display = "_ _ _ _";
-        lv_label_set_text(id(code_display), display.c_str());
-
-        // Alarm countdown (only when pending - needs fast refresh)
         if (id(alarm_state).has_state() && id(alarm_state).state == "pending") {
           const char* countdown = "Arming...";
           char buf[20];
