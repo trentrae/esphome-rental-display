@@ -282,7 +282,7 @@
                 text: "\U000F0341"
                 text_font: mdi_48
                 text_color: 0x0A84FF
-                align: LEFT
+                align: LEFT_MID
                 x: 4
                 y: 10
             - label:
@@ -304,7 +304,7 @@
                 text: "All Secured"
                 text_font: roboto_14
                 text_color: 0x30D158
-                align: RIGHT
+                align: RIGHT_MID
                 y: 10
                 x: -8
 
