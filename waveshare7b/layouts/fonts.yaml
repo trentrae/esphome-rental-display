@@ -139,6 +139,15 @@ font:
       - "\U000F059E" # weather-windy
       - "\U000F0599" # weather-sunset
 
+  # ── Material Design Icons 36px (compact cards) ──────────────────────────────
+  - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
+    id: mdi_36
+    size: 36
+    bpp: 4
+    glyphs:
+      - "\U000F033E" # lock
+      - "\U000F033F" # lock-open
+
   # ── Material Design Icons 28px (nav bar) ─────────────────────────────────────
   - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
     id: mdi_28

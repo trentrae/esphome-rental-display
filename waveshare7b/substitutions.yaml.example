@@ -17,11 +17,13 @@ substitutions:
 
   # ── Garage / Covers ───────────────────────────────────────
   south_garage_door: "cover.garage_door"
+  north_garage_door: "cover.north_garage_door"
 
   # ── Contact / Binary Sensors ──────────────────────────────
   front_door_sensor: "binary_sensor.front_door_contact"
   back_door_sensor: "binary_sensor.back_door_contact"
   south_garage_sensor: "binary_sensor.south_garage_door"
+  north_garage_sensor: "binary_sensor.north_garage_door"
 
   # ── Alarm ─────────────────────────────────────────────────
   alarm_panel: "alarm_control_panel.alarmo"

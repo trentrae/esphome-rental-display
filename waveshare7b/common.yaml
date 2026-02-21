@@ -344,9 +344,6 @@ binary_sensor:
       - lambda: |-
           lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
           const char* t = x ? "ON" : "OFF";
-          lv_label_set_text(id(living_room_main), t);
-          lv_obj_set_style_text_color(id(living_room_main), c, 0);
-          lv_obj_set_style_text_color(id(living_room_icon_main), c, 0);
           lv_label_set_text(id(living_room_toggle_text), t);
           lv_obj_set_style_text_color(id(living_room_toggle_text), c, 0);
           lv_obj_set_style_text_color(id(living_room_light_icon), c, 0);
@@ -387,6 +384,22 @@ binary_sensor:
           lv_obj_set_style_text_color(id(garage_status_locks), c, 0);
           lv_label_set_text(id(garage_quick_icon), icon);
           lv_obj_set_style_text_color(id(garage_quick_icon), c, 0);
+      - script.execute: update_security_status
+
+  # Garage entities (north)
+  - platform: homeassistant
+    id: north_garage_door_open
+    entity_id: ${north_garage_sensor}
+    internal: true
+    on_state:
+      - lambda: |-
+          const char* icon = x ? "\U000F12D4" : "\U000F12D3";
+          lv_color_t c = x ? lv_color_hex(0xFF9F0A) : lv_color_hex(0x30D158);
+          const char* t = x ? "Open" : "Closed";
+          lv_label_set_text(id(north_garage_icon_main), icon);
+          lv_obj_set_style_text_color(id(north_garage_icon_main), c, 0);
+          lv_label_set_text(id(north_garage_status_main), t);
+          lv_obj_set_style_text_color(id(north_garage_status_main), c, 0);
       - script.execute: update_security_status
 
   - platform: homeassistant
@@ -455,7 +468,8 @@ script:
           lv_color_t red   = lv_color_hex(0xFF453A);
           bool has_open = false;
           std::string list = "";
-          if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "Garage  "; }
+          if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "S.Garage  "; }
+          if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) { has_open = true; list += "N.Garage  "; }
           if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) { has_open = true; list += "Back Door  "; }
           if (id(front_door_locked).has_state() && !id(front_door_locked).state) { has_open = true; list += "Front Unlocked  "; }
           if (id(back_door_locked).has_state() && !id(back_door_locked).state) { has_open = true; list += "Back Unlocked"; }
@@ -476,6 +490,7 @@ script:
           if (id(front_door_locked).has_state() && !id(front_door_locked).state) any = true;
           if (id(back_door_locked).has_state() && !id(back_door_locked).state) any = true;
           if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
+          if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) any = true;
           lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");
           lv_obj_set_style_text_color(id(security_summary), any ? red : green, 0);
           lv_label_set_text(id(security_summary_locks), any ? "Open / Unsecured" : "All Secured");

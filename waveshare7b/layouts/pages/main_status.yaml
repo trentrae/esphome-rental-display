@@ -141,7 +141,7 @@
             - label:
                 id: front_door_icon_main
                 text: "\U000F033E"
-                text_font: mdi_48
+                text_font: mdi_36
                 text_color: 0x30D158
                 align: CENTER
                 y: -10
@@ -172,7 +172,7 @@
             - label:
                 id: back_door_icon_main
                 text: "\U000F033E"
-                text_font: mdi_48
+                text_font: mdi_36
                 text_color: 0x30D158
                 align: CENTER
                 y: -10
@@ -201,7 +201,7 @@
                   entity_id: ${south_garage_door}
           widgets:
             - label:
-                text: "Garage"
+                text: "S. Garage"
                 text_font: roboto_14
                 text_color: 0x8E8E93
                 align: TOP_MID
@@ -233,28 +233,28 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.toggle
+                service: cover.toggle
                 data:
-                  entity_id: ${living_room_light}
+                  entity_id: ${north_garage_door}
           widgets:
             - label:
-                text: "Living Room"
+                text: "N. Garage"
                 text_font: roboto_14
                 text_color: 0x8E8E93
                 align: TOP_MID
                 y: 2
             - label:
-                id: living_room_icon_main
-                text: "\U000F0335"
+                id: north_garage_icon_main
+                text: "\U000F12D3"
                 text_font: mdi_48
-                text_color: 0x8E8E93
+                text_color: 0x30D158
                 align: CENTER
                 y: -10
             - label:
-                id: living_room_main
-                text: "OFF"
+                id: north_garage_status_main
+                text: "Closed"
                 text_font: roboto_20
-                text_color: 0x8E8E93
+                text_color: 0x30D158
                 align: BOTTOM_MID
                 y: -6
 
@@ -629,7 +629,7 @@
           pad_all: 16
           widgets:
             - label:
-                text: "Last Updated"
+                text: "Current Time"
                 text_font: roboto_14
                 text_color: 0x8E8E93
                 align: TOP_MID
