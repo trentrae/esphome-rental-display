@@ -258,81 +258,266 @@
                 align: BOTTOM_MID
                 y: -6
 
-      # ── Row 2: Large Security System Card ───────────────────────────────────
+      # ── Row 2: Security System Card (tap to go to alarm page) ──────────────
       - obj:
           x: 12
           y: 145
           width: 680
-          height: 180
+          height: 120
           bg_color: 0x2C2C2E
           border_width: 0
           radius: 20
-          pad_all: 24
+          pad_all: 20
+          clickable: true
+          on_click:
+            - lvgl.page.show: page_alarm_control
           widgets:
             - label:
                 text: "SECURITY SYSTEM"
-                text_font: roboto_16
+                text_font: roboto_14
                 text_color: 0x8E8E93
                 align: TOP_LEFT
                 y: 0
-
+            - label:
+                text: "\U000F0341"
+                text_font: mdi_48
+                text_color: 0x0A84FF
+                align: LEFT
+                x: 4
+                y: 10
             - label:
                 id: alarm_status_main
                 text: "Connecting..."
                 text_font: roboto_36
                 text_color: 0x8E8E93
                 align: CENTER
-                y: -10
-
+                y: 10
             - label:
                 id: alarm_countdown_main
                 text: ""
-                text_font: roboto_20
+                text_font: roboto_16
                 text_color: 0xFF9F0A
-                align: CENTER
-                y: 28
+                align: BOTTOM_MID
+                y: -2
+            - label:
+                id: security_summary
+                text: "All Secured"
+                text_font: roboto_14
+                text_color: 0x30D158
+                align: RIGHT
+                y: 10
+                x: -8
 
+      # ── Row 2: 5-Day Weather Forecast ───────────────────────────────────────
+      - obj:
+          x: 12
+          y: 278
+          width: 680
+          height: 160
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 20
+          pad_all: 16
+          widgets:
+            - label:
+                text: "5-DAY FORECAST"
+                text_font: roboto_14
+                text_color: 0x8E8E93
+                align: TOP_LEFT
+                y: 0
+
+            # Day 1
             - obj:
                 x: 0
-                y: 110
-                width: 200
-                height: 52
-                bg_color: 0x0A84FF
-                radius: 12
-                clickable: true
-                on_click:
-                  - lvgl.page.show: page_alarm_control
+                y: 24
+                width: 126
+                height: 110
+                bg_opa: TRANSP
+                border_width: 0
                 widgets:
                   - label:
-                      text: "ARM / DISARM"
+                      id: wx_day_0
+                      text: "---"
+                      text_font: roboto_14
+                      text_color: 0x8E8E93
+                      align: TOP_MID
+                  - label:
+                      id: wx_icon_0
+                      text: "\U000F059D"
+                      text_font: mdi_48
+                      text_color: 0xFFD700
+                      align: CENTER
+                      y: -4
+                  - label:
+                      id: wx_high_0
+                      text: "--°"
                       text_font: roboto_16
                       text_color: 0xFFFFFF
-                      align: CENTER
+                      align: BOTTOM_MID
+                      x: -20
+                  - label:
+                      id: wx_low_0
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0x8E8E93
+                      align: BOTTOM_MID
+                      x: 20
 
+            # Day 2
             - obj:
-                x: 218
-                y: 110
-                width: 200
-                height: 52
-                bg_color: 0x3A3A3C
-                radius: 12
-                clickable: true
-                on_click:
-                  - lvgl.page.show: page_locks_doors
+                x: 132
+                y: 24
+                width: 126
+                height: 110
+                bg_opa: TRANSP
+                border_width: 0
                 widgets:
                   - label:
-                      text: "LOCKS & DOORS"
+                      id: wx_day_1
+                      text: "---"
+                      text_font: roboto_14
+                      text_color: 0x8E8E93
+                      align: TOP_MID
+                  - label:
+                      id: wx_icon_1
+                      text: "\U000F059D"
+                      text_font: mdi_48
+                      text_color: 0xFFD700
+                      align: CENTER
+                      y: -4
+                  - label:
+                      id: wx_high_1
+                      text: "--°"
                       text_font: roboto_16
                       text_color: 0xFFFFFF
-                      align: CENTER
+                      align: BOTTOM_MID
+                      x: -20
+                  - label:
+                      id: wx_low_1
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0x8E8E93
+                      align: BOTTOM_MID
+                      x: 20
 
-      # ── Open Sensors Warning (hidden by default) ─────────────────────────────
+            # Day 3
+            - obj:
+                x: 264
+                y: 24
+                width: 126
+                height: 110
+                bg_opa: TRANSP
+                border_width: 0
+                widgets:
+                  - label:
+                      id: wx_day_2
+                      text: "---"
+                      text_font: roboto_14
+                      text_color: 0x8E8E93
+                      align: TOP_MID
+                  - label:
+                      id: wx_icon_2
+                      text: "\U000F059D"
+                      text_font: mdi_48
+                      text_color: 0xFFD700
+                      align: CENTER
+                      y: -4
+                  - label:
+                      id: wx_high_2
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0xFFFFFF
+                      align: BOTTOM_MID
+                      x: -20
+                  - label:
+                      id: wx_low_2
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0x8E8E93
+                      align: BOTTOM_MID
+                      x: 20
+
+            # Day 4
+            - obj:
+                x: 396
+                y: 24
+                width: 126
+                height: 110
+                bg_opa: TRANSP
+                border_width: 0
+                widgets:
+                  - label:
+                      id: wx_day_3
+                      text: "---"
+                      text_font: roboto_14
+                      text_color: 0x8E8E93
+                      align: TOP_MID
+                  - label:
+                      id: wx_icon_3
+                      text: "\U000F059D"
+                      text_font: mdi_48
+                      text_color: 0xFFD700
+                      align: CENTER
+                      y: -4
+                  - label:
+                      id: wx_high_3
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0xFFFFFF
+                      align: BOTTOM_MID
+                      x: -20
+                  - label:
+                      id: wx_low_3
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0x8E8E93
+                      align: BOTTOM_MID
+                      x: 20
+
+            # Day 5
+            - obj:
+                x: 528
+                y: 24
+                width: 126
+                height: 110
+                bg_opa: TRANSP
+                border_width: 0
+                widgets:
+                  - label:
+                      id: wx_day_4
+                      text: "---"
+                      text_font: roboto_14
+                      text_color: 0x8E8E93
+                      align: TOP_MID
+                  - label:
+                      id: wx_icon_4
+                      text: "\U000F059D"
+                      text_font: mdi_48
+                      text_color: 0xFFD700
+                      align: CENTER
+                      y: -4
+                  - label:
+                      id: wx_high_4
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0xFFFFFF
+                      align: BOTTOM_MID
+                      x: -20
+                  - label:
+                      id: wx_low_4
+                      text: "--°"
+                      text_font: roboto_16
+                      text_color: 0x8E8E93
+                      align: BOTTOM_MID
+                      x: 20
+
+      # ── Open Sensors Warning (hidden by default, overlays weather) ────────────
       - obj:
           id: open_sensors_warning
           x: 12
-          y: 340
+          y: 278
           width: 680
-          height: 100
+          height: 160
           bg_color: 0xFF453A
           border_width: 0
           radius: 16

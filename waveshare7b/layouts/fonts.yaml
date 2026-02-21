@@ -86,6 +86,18 @@ font:
       - "\U000F0493" # alert-circle
       - "\U000F059D" # weather-sunny
       - "\U000F0F55" # home-thermometer
+      - "\U000F0590" # weather-cloudy
+      - "\U000F0591" # weather-fog
+      - "\U000F0592" # weather-hail
+      - "\U000F0593" # weather-lightning
+      - "\U000F067E" # weather-lightning-rainy
+      - "\U000F0595" # weather-partly-cloudy
+      - "\U000F0596" # weather-pouring
+      - "\U000F0597" # weather-rainy
+      - "\U000F0598" # weather-snowy
+      - "\U000F067F" # weather-snowy-rainy
+      - "\U000F059E" # weather-windy
+      - "\U000F0599" # weather-sunset
 
   # ── Material Design Icons 48px (standard) ────────────────────────────────────
   - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"
@@ -114,6 +126,18 @@ font:
       - "\U000F0493" # alert-circle
       - "\U000F059D" # weather-sunny
       - "\U000F0F55" # home-thermometer
+      - "\U000F0590" # weather-cloudy
+      - "\U000F0591" # weather-fog
+      - "\U000F0592" # weather-hail
+      - "\U000F0593" # weather-lightning
+      - "\U000F067E" # weather-lightning-rainy
+      - "\U000F0595" # weather-partly-cloudy
+      - "\U000F0596" # weather-pouring
+      - "\U000F0597" # weather-rainy
+      - "\U000F0598" # weather-snowy
+      - "\U000F067F" # weather-snowy-rainy
+      - "\U000F059E" # weather-windy
+      - "\U000F0599" # weather-sunset
 
   # ── Material Design Icons 28px (nav bar) ─────────────────────────────────────
   - file: "https://github.com/Templarian/MaterialDesign-Webfont/raw/master/fonts/materialdesignicons-webfont.ttf"

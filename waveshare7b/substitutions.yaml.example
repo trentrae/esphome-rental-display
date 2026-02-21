@@ -29,3 +29,6 @@ substitutions:
   # ── Climate ───────────────────────────────────────────────
   outside_temp: "sensor.outside_temperature"
   inside_temp: "sensor.inside_temperature"   # Second temp shown on 7B status page
+
+  # ── Weather ───────────────────────────────────────────────
+  weather_entity: "weather.forecast_home"    # HA weather entity for 5-day forecast
