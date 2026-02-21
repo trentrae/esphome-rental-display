@@ -416,6 +416,6 @@
         text: !lambda |-
           std::string code = id(entered_code);
           std::string display = "";
-          for (size_t i = 0; i < code.length() && i < 6; i++) display += "* ";
+          for (size_t i = 0; i < code.length() && i < 6; i++) display += ". ";
           if (display.empty()) display = "_ _ _ _";
           return display.c_str();
