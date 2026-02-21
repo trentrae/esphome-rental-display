@@ -478,6 +478,8 @@ script:
           if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
           lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");
           lv_obj_set_style_text_color(id(security_summary), any ? red : green, 0);
+          lv_label_set_text(id(security_summary_locks), any ? "Open / Unsecured" : "All Secured");
+          lv_obj_set_style_text_color(id(security_summary_locks), any ? red : green, 0);
 
   - id: arm_away_script
     then:

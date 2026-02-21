@@ -170,7 +170,7 @@
                 text_color: 0x8E8E93
                 align: TOP_MID
             - label:
-                id: security_summary
+                id: security_summary_locks
                 text: "All Secured"
                 text_font: roboto_32
                 text_color: 0x30D158
