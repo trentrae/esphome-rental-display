@@ -334,7 +334,6 @@ text_sensor:
     on_value:
       - lambda: lv_label_set_text(id(wx_day_4), x.c_str());
 
-text_sensor:
   # Lock entities (lock.* states are 'locked'/'unlocked', not binary)
   - platform: homeassistant
     id: front_door_locked
@@ -348,7 +347,7 @@ text_sensor:
           lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
           const char* t = locked ? "Locked" : "Unlocked";
           const char* icon = locked ? "\U000F033E" : "\U000F033F";
-          ESP_LOGI("lock", "Front door state: '%s' -> locked=%d", x.c_str(), locked);
+          ESP_LOGI("lock", "Front door state raw: '%s' lower: '%s' locked=%d", x.c_str(), s.c_str(), locked);
           lv_label_set_text(id(front_door_main), t);
           lv_obj_set_style_text_color(id(front_door_main), c, 0);
           lv_label_set_text(id(front_door_icon_main), icon);
@@ -371,7 +370,7 @@ text_sensor:
           lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
           const char* t = locked ? "Locked" : "Unlocked";
           const char* icon = locked ? "\U000F033E" : "\U000F033F";
-          ESP_LOGI("lock", "Back door state: '%s' -> locked=%d", x.c_str(), locked);
+          ESP_LOGI("lock", "Back door state raw: '%s' lower: '%s' locked=%d", x.c_str(), s.c_str(), locked);
           lv_label_set_text(id(back_door_main), t);
           lv_obj_set_style_text_color(id(back_door_main), c, 0);
           lv_label_set_text(id(back_door_icon_main), icon);
