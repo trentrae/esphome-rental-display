@@ -381,6 +381,32 @@ text_sensor:
           lv_obj_set_style_text_color(id(back_door_icon_locks), c, 0);
       - script.execute: update_security_status
 
+  # Garage cover entity (cover.* states are 'open'/'closed', not binary)
+  - platform: homeassistant
+    id: garage_door_open
+    entity_id: ${south_garage_sensor}
+    internal: true
+    on_value:
+      - lambda: |-
+          std::string s = x;
+          for (auto &ch : s) ch = tolower(ch);
+          bool is_open = (s == "open" || s == "opening" || s == "on");
+          const char* icon = is_open ? "\U000F12D4" : "\U000F12D3";
+          lv_color_t c = is_open ? lv_color_hex(0xFF9F0A) : lv_color_hex(0x30D158);
+          const char* t = is_open ? "Open" : "Closed";
+          ESP_LOGI("garage", "S.Garage state raw: '%s' lower: '%s' open=%d", x.c_str(), s.c_str(), is_open);
+          lv_label_set_text(id(garage_icon_main), icon);
+          lv_obj_set_style_text_color(id(garage_icon_main), c, 0);
+          lv_label_set_text(id(garage_status_main), t);
+          lv_obj_set_style_text_color(id(garage_status_main), c, 0);
+          lv_label_set_text(id(garage_icon_locks), icon);
+          lv_obj_set_style_text_color(id(garage_icon_locks), c, 0);
+          lv_label_set_text(id(garage_status_locks), t);
+          lv_obj_set_style_text_color(id(garage_status_locks), c, 0);
+          lv_label_set_text(id(garage_quick_icon), icon);
+          lv_obj_set_style_text_color(id(garage_quick_icon), c, 0);
+      - script.execute: update_security_status
+
 binary_sensor:
   # Light entities
   - platform: homeassistant
@@ -395,29 +421,7 @@ binary_sensor:
           lv_obj_set_style_text_color(id(living_room_toggle_text), c, 0);
           lv_obj_set_style_text_color(id(living_room_light_icon), c, 0);
 
-  # Lock entities
-  # (moved to text_sensor section above — lock.* entities need string comparison)
-
-  - platform: homeassistant
-    id: garage_door_open
-    entity_id: ${south_garage_sensor}
-    internal: true
-    on_state:
-      - lambda: |-
-          const char* icon = x ? "\U000F12D4" : "\U000F12D3";
-          lv_color_t c = x ? lv_color_hex(0xFF9F0A) : lv_color_hex(0x30D158);
-          const char* t = x ? "Open" : "Closed";
-          lv_label_set_text(id(garage_icon_main), icon);
-          lv_obj_set_style_text_color(id(garage_icon_main), c, 0);
-          lv_label_set_text(id(garage_status_main), t);
-          lv_obj_set_style_text_color(id(garage_status_main), c, 0);
-          lv_label_set_text(id(garage_icon_locks), icon);
-          lv_obj_set_style_text_color(id(garage_icon_locks), c, 0);
-          lv_label_set_text(id(garage_status_locks), t);
-          lv_obj_set_style_text_color(id(garage_status_locks), c, 0);
-          lv_label_set_text(id(garage_quick_icon), icon);
-          lv_obj_set_style_text_color(id(garage_quick_icon), c, 0);
-      - script.execute: update_security_status
+  # Lock & S.Garage entities moved to text_sensor section above
 
   # Garage entities (north)
   - platform: homeassistant
@@ -488,7 +492,9 @@ script:
           lv_color_t red   = lv_color_hex(0xFF453A);
           bool has_open = false;
           std::string list = "";
-          if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "S.Garage  "; }
+          std::string gs = id(garage_door_open).state; for (auto &ch : gs) ch = tolower(ch);
+          bool s_garage_open = (gs == "open" || gs == "opening" || gs == "on");
+          if (id(garage_door_open).has_state() && s_garage_open) { has_open = true; list += "S.Garage  "; }
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) { has_open = true; list += "N.Garage  "; }
           if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) { has_open = true; list += "Back Door  "; }
           std::string fl = id(front_door_locked).state; for (auto &ch : fl) ch = tolower(ch);
@@ -511,7 +517,7 @@ script:
           bool any = false;
           if (id(front_door_locked).has_state() && fl != "locked") any = true;
           if (id(back_door_locked).has_state() && bl != "locked") any = true;
-          if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
+          if (id(garage_door_open).has_state() && s_garage_open) any = true;
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) any = true;
           lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");
           lv_obj_set_style_text_color(id(security_summary), any ? red : green, 0);
