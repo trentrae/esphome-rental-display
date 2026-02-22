@@ -1,4 +1,4 @@
-# ESPHome Rental Property Display
+# ESPHome Property Display
 
 A touchscreen dashboard for rental properties built with [ESPHome](https://esphome.io) and [LVGL](https://lvgl.io). Runs on the **Waveshare ESP32-S3-Touch-LCD-7B** (1024×600, capacitive touch) and connects to [Home Assistant](https://www.home-assistant.io/) for real-time status and control.
 
@@ -600,3 +600,4 @@ MIT
 - [Material Design Icons](https://pictogrammers.com/library/mdi/) — UI icons
 - [Roboto](https://fonts.google.com/specimen/Roboto) — UI font
 - Display pin mapping reference: [agillis/esphome-modular-lvgl-buttons](https://github.com/agillis/esphome-modular-lvgl-buttons)
+
