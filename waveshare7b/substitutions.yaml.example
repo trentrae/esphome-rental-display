@@ -1,36 +1,104 @@
 # substitutions.yaml.example
-# Copy to substitutions.yaml and fill in YOUR Home Assistant entity IDs
-# Hardware pins are hardcoded in device.yaml (7B uses most GPIO for RGB bus)
+# ═══════════════════════════════════════════════════════════════════════════════
+# RENTAL DISPLAY - Entity Configuration
+# ═══════════════════════════════════════════════════════════════════════════════
+# Copy this file to substitutions.yaml and fill in YOUR Home Assistant entity IDs.
+# Each property gets its own substitutions.yaml — this is the ONLY file you
+# need to change when deploying to a new property.
+#
+# Hardware pins are hardcoded in device.yaml (7B uses most GPIO for RGB bus).
+#
+# HOW TO DEPLOY TO A NEW PROPERTY:
+#   1. Copy this file to substitutions.yaml
+#   2. Update property_name
+#   3. Replace every entity ID with the correct one from your HA instance
+#   4. Flash the device
+# ═══════════════════════════════════════════════════════════════════════════════
 
 substitutions:
-  # ── Property ──────────────────────────────────────────────
+  # ── Property ──────────────────────────────────────────────────────────────────
+  # Display name shown in the header bar
   property_name: "EmeraldTide"
 
-  # ── Lights ────────────────────────────────────────────────
-  living_room_light: "light.living_room"
-  kitchen_light: "light.kitchen"             # Shown on 7B lighting page
-  outdoor_light: "light.outdoor_front"       # Shown on 7B lighting page
-
-  # ── Locks ─────────────────────────────────────────────────
-  front_door_lock: "lock.front_door"
-  back_door_lock: "lock.back_door"           # Added for 7B (more space)
-
-  # ── Garage / Covers ───────────────────────────────────────
-  south_garage_door: "cover.garage_door"
-  north_garage_door: "cover.north_garage_door"
-
-  # ── Contact / Binary Sensors ──────────────────────────────
-  front_door_sensor: "binary_sensor.front_door_contact"
-  back_door_sensor: "binary_sensor.back_door_contact"
-  south_garage_sensor: "binary_sensor.south_garage_door"
-  north_garage_sensor: "binary_sensor.north_garage_door"
-
-  # ── Alarm ─────────────────────────────────────────────────
+  # ── Alarm Panel ───────────────────────────────────────────────────────────────
+  # Used for: arm/disarm controls, alarm status display, countdown timer
   alarm_panel: "alarm_control_panel.alarmo"
 
-  # ── Climate ───────────────────────────────────────────────
-  outside_temp: "sensor.outside_temperature"
-  inside_temp: "sensor.inside_temperature"   # Second temp shown on 7B status page
+  # ── Locks ─────────────────────────────────────────────────────────────────────
+  # Used for: main status cards, locks & doors page, security status checks
+  front_door_lock: "lock.front_door_deadbolt"
+  back_door_lock: "lock.patio_doordeadbolt"
 
-  # ── Weather ───────────────────────────────────────────────
-  weather_entity: "weather.forecast_home"    # HA weather entity for 5-day forecast
+  # ── Contact / Binary Sensors ──────────────────────────────────────────────────
+  # Door contact sensors — used for open/closed status + security warnings
+  front_door_sensor: "binary_sensor.front_door"
+  back_door_sensor: "binary_sensor.back_door"
+  # Garage door sensors — binary open/closed
+  south_garage_sensor: "binary_sensor.konnected_aa00c0_zone_5"
+  north_garage_sensor: "binary_sensor.konnected_aa00c0_zone_1"
+  # NOTE: Map your Konnected zones to the correct physical doors:
+  #   zone_1 = ?          zone_2 = ?          zone_3 = ?
+  #   zone_4 = ?          zone_5 = ?
+
+  # ── Garage / Covers ───────────────────────────────────────────────────────────
+  # Cover entities — used for tap-to-toggle on status page + locks page
+  south_garage_door: "cover.garage_door"
+  north_garage_door: "cover.north_garage_door"   # TODO: set your north garage cover entity
+
+  # ── Lights (display controls 3 lights) ────────────────────────────────────────
+  # These appear on the lighting control page + "All Lights Off" quick action
+  living_room_light: "light.in_wall_paddle_dimmer_qfsw_500s"   # Kitchen / main room
+  kitchen_light: "light.in_wall_paddle_dimmer_500s"             # Patio dining / secondary
+  outdoor_light: "switch.scene_capable_push_on_off"             # Front coach / outdoor
+
+  # ── Climate / Temperature ─────────────────────────────────────────────────────
+  # Shown as the first two status cards on the main page
+  outside_temp: "sensor.outside_temperature"
+  inside_temp: "sensor.inside_temperature"
+
+  # ── Weather ───────────────────────────────────────────────────────────────────
+  # HA weather entity used by template sensors for 5-day forecast
+  # Requires 20 template sensors in HA — see README for setup
+  weather_entity: "weather.ktki_daynight"
+
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # REFERENCE: Other HA entities available at this property (not yet wired)
+  # ═══════════════════════════════════════════════════════════════════════════════
+  # Uncomment and wire into layouts as needed for future display pages.
+  #
+  # ── Additional Lights ─────────────────────────────────────────────────────────
+  # patio_main_light: "light.in_wall_paddle_dimmer_500s_2"
+  # patio_aux_light: "light.in_wall_paddle_dimmer_500s_3"
+  # garage_storage_light: "switch.panic_room"
+  # guest_room_light: "switch.guest_room_light"
+  # third_car_garage_light: "switch.in_wall_paddle_switch_qfsw_500s_2"
+  # main_garage_coach_light: "switch.in_wall_paddle_switch_qfsw_500s"
+  # landscape_lights: "switch.landscape_lights"
+  # pantry_light: "switch.pantry_light"
+  #
+  # ── Climate / HVAC ───────────────────────────────────────────────────────────
+  # thermostat: "climate.downstairs_nativezone"
+  #
+  # ── Pool / Spa ───────────────────────────────────────────────────────────────
+  # pool_temp: "sensor.pool_temp"
+  # spa_temp: "sensor.spa_temp"
+  # pool_pump: "switch.main_pool_pump"
+  # pool_heater: "switch.pool_heater"
+  # spa_heater: "switch.spa_heater"
+  # pool_cleaner: "switch.pool_cleaner"
+  # spa_mode: "switch.spa_mode"
+  #
+  # ── Cameras ──────────────────────────────────────────────────────────────────
+  # front_door_camera: "camera.front_door_high"
+  # driveway_camera: "camera.camera1_fluent"
+  # street_camera: "camera.camera1_sub"
+  # side_gate_camera: "camera.side_gate_sub"
+  #
+  # ── Media Players ────────────────────────────────────────────────────────────
+  # patio_receiver: "media_player.patio_denon_receiver"
+  # patio_zone2: "media_player.patio_denon_receiver_zone2"
+  # media_room: "media_player.denon_media_room"
+  #
+  # ── Misc ─────────────────────────────────────────────────────────────────────
+  # patio_heater: "switch.eatons_z_wave_plus_wireless_receptacle"
+  # coffee_maker: "switch.coffee_maker"
