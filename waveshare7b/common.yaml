@@ -334,6 +334,48 @@ text_sensor:
     on_value:
       - lambda: lv_label_set_text(id(wx_day_4), x.c_str());
 
+text_sensor:
+  # Lock entities (lock.* states are 'locked'/'unlocked', not binary)
+  - platform: homeassistant
+    id: front_door_locked
+    entity_id: ${front_door_lock}
+    internal: true
+    on_value:
+      - lambda: |-
+          bool locked = (x == "locked");
+          lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
+          const char* t = locked ? "Locked" : "Unlocked";
+          const char* icon = locked ? "\U000F033E" : "\U000F033F";
+          lv_label_set_text(id(front_door_main), t);
+          lv_obj_set_style_text_color(id(front_door_main), c, 0);
+          lv_label_set_text(id(front_door_icon_main), icon);
+          lv_obj_set_style_text_color(id(front_door_icon_main), c, 0);
+          lv_label_set_text(id(front_door_status_locks), t);
+          lv_obj_set_style_text_color(id(front_door_status_locks), c, 0);
+          lv_label_set_text(id(front_door_icon_locks), icon);
+          lv_obj_set_style_text_color(id(front_door_icon_locks), c, 0);
+      - script.execute: update_security_status
+
+  - platform: homeassistant
+    id: back_door_locked
+    entity_id: ${back_door_lock}
+    internal: true
+    on_value:
+      - lambda: |-
+          bool locked = (x == "locked");
+          lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
+          const char* t = locked ? "Locked" : "Unlocked";
+          const char* icon = locked ? "\U000F033E" : "\U000F033F";
+          lv_label_set_text(id(back_door_main), t);
+          lv_obj_set_style_text_color(id(back_door_main), c, 0);
+          lv_label_set_text(id(back_door_icon_main), icon);
+          lv_obj_set_style_text_color(id(back_door_icon_main), c, 0);
+          lv_label_set_text(id(back_door_status_locks), t);
+          lv_obj_set_style_text_color(id(back_door_status_locks), c, 0);
+          lv_label_set_text(id(back_door_icon_locks), icon);
+          lv_obj_set_style_text_color(id(back_door_icon_locks), c, 0);
+      - script.execute: update_security_status
+
 binary_sensor:
   # Light entities
   - platform: homeassistant
@@ -349,21 +391,7 @@ binary_sensor:
           lv_obj_set_style_text_color(id(living_room_light_icon), c, 0);
 
   # Lock entities
-  - platform: homeassistant
-    id: front_door_locked
-    entity_id: ${front_door_lock}
-    internal: true
-    on_state:
-      - lambda: |-
-          lv_color_t c = x ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
-          const char* t = x ? "Locked" : "Unlocked";
-          lv_label_set_text(id(front_door_main), t);
-          lv_obj_set_style_text_color(id(front_door_main), c, 0);
-          lv_obj_set_style_text_color(id(front_door_icon_main), c, 0);
-          lv_label_set_text(id(front_door_status_locks), t);
-          lv_obj_set_style_text_color(id(front_door_status_locks), c, 0);
-          lv_obj_set_style_text_color(id(front_door_icon_locks), c, 0);
-      - script.execute: update_security_status
+  # (moved to text_sensor section above — lock.* entities need string comparison)
 
   - platform: homeassistant
     id: garage_door_open
@@ -421,21 +449,8 @@ binary_sensor:
           lv_label_set_text(id(front_door_sensor_status), x ? "Door OPEN" : "Door Closed");
           lv_obj_set_style_text_color(id(front_door_sensor_status), x ? lv_color_hex(0xFF453A) : lv_color_hex(0x8E8E93), 0);
 
-  - platform: homeassistant
-    id: back_door_locked
-    entity_id: ${back_door_lock}
-    internal: true
-    on_state:
-      - lambda: |-
-          lv_color_t c = x ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
-          const char* t = x ? "Locked" : "Unlocked";
-          lv_label_set_text(id(back_door_main), t);
-          lv_obj_set_style_text_color(id(back_door_main), c, 0);
-          lv_obj_set_style_text_color(id(back_door_icon_main), c, 0);
-          lv_label_set_text(id(back_door_status_locks), t);
-          lv_obj_set_style_text_color(id(back_door_status_locks), c, 0);
-          lv_obj_set_style_text_color(id(back_door_icon_locks), c, 0);
-      - script.execute: update_security_status
+  # Back door lock
+  # (moved to text_sensor section above — lock.* entities need string comparison)
 
   - platform: homeassistant
     id: kitchen_light_state
@@ -471,8 +486,8 @@ script:
           if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "S.Garage  "; }
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) { has_open = true; list += "N.Garage  "; }
           if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) { has_open = true; list += "Back Door  "; }
-          if (id(front_door_locked).has_state() && !id(front_door_locked).state) { has_open = true; list += "Front Unlocked  "; }
-          if (id(back_door_locked).has_state() && !id(back_door_locked).state) { has_open = true; list += "Back Unlocked"; }
+          if (id(front_door_locked).has_state() && id(front_door_locked).state != "locked") { has_open = true; list += "Front Unlocked  "; }
+          if (id(back_door_locked).has_state() && id(back_door_locked).state != "locked") { has_open = true; list += "Back Unlocked"; }
           if (has_open) {
             lv_obj_clear_flag(id(open_sensors_warning), LV_OBJ_FLAG_HIDDEN);
             lv_label_set_text(id(open_sensors_list), list.c_str());
@@ -487,8 +502,8 @@ script:
             lv_obj_set_style_text_color(id(alarm_sensors_list), red, 0);
           }
           bool any = false;
-          if (id(front_door_locked).has_state() && !id(front_door_locked).state) any = true;
-          if (id(back_door_locked).has_state() && !id(back_door_locked).state) any = true;
+          if (id(front_door_locked).has_state() && id(front_door_locked).state != "locked") any = true;
+          if (id(back_door_locked).has_state() && id(back_door_locked).state != "locked") any = true;
           if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) any = true;
           lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");

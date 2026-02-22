@@ -37,7 +37,7 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.toggle
+                service: homeassistant.toggle
                 data:
                   entity_id: ${living_room_light}
           widgets:
@@ -80,7 +80,7 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.toggle
+                service: homeassistant.toggle
                 data:
                   entity_id: ${kitchen_light}
           widgets:
@@ -123,7 +123,7 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.toggle
+                service: homeassistant.toggle
                 data:
                   entity_id: ${outdoor_light}
           widgets:
@@ -166,15 +166,15 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.turn_on
+                service: homeassistant.turn_on
                 data:
                   entity_id: ${living_room_light}
             - homeassistant.service:
-                service: light.turn_on
+                service: homeassistant.turn_on
                 data:
                   entity_id: ${kitchen_light}
             - homeassistant.service:
-                service: light.turn_on
+                service: homeassistant.turn_on
                 data:
                   entity_id: ${outdoor_light}
           widgets:
@@ -202,15 +202,15 @@
           clickable: true
           on_click:
             - homeassistant.service:
-                service: light.turn_off
+                service: homeassistant.turn_off
                 data:
                   entity_id: ${living_room_light}
             - homeassistant.service:
-                service: light.turn_off
+                service: homeassistant.turn_off
                 data:
                   entity_id: ${kitchen_light}
             - homeassistant.service:
-                service: light.turn_off
+                service: homeassistant.turn_off
                 data:
                   entity_id: ${outdoor_light}
           widgets:
