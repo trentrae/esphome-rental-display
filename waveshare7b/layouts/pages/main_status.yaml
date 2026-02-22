@@ -131,6 +131,17 @@
           border_width: 0
           radius: 16
           pad_all: 14
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: lock.lock
+                data:
+                  entity_id: ${front_door_lock}
+          on_long_press:
+            - homeassistant.service:
+                service: lock.unlock
+                data:
+                  entity_id: ${front_door_lock}
           widgets:
             - label:
                 text: "Front Door"
@@ -162,6 +173,17 @@
           border_width: 0
           radius: 16
           pad_all: 14
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: lock.lock
+                data:
+                  entity_id: ${back_door_lock}
+          on_long_press:
+            - homeassistant.service:
+                service: lock.unlock
+                data:
+                  entity_id: ${back_door_lock}
           widgets:
             - label:
                 text: "Back Door"

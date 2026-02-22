@@ -342,10 +342,13 @@ text_sensor:
     internal: true
     on_value:
       - lambda: |-
-          bool locked = (x == "locked");
+          std::string s = x;
+          for (auto &ch : s) ch = tolower(ch);
+          bool locked = (s == "locked");
           lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
           const char* t = locked ? "Locked" : "Unlocked";
           const char* icon = locked ? "\U000F033E" : "\U000F033F";
+          ESP_LOGI("lock", "Front door state: '%s' -> locked=%d", x.c_str(), locked);
           lv_label_set_text(id(front_door_main), t);
           lv_obj_set_style_text_color(id(front_door_main), c, 0);
           lv_label_set_text(id(front_door_icon_main), icon);
@@ -362,10 +365,13 @@ text_sensor:
     internal: true
     on_value:
       - lambda: |-
-          bool locked = (x == "locked");
+          std::string s = x;
+          for (auto &ch : s) ch = tolower(ch);
+          bool locked = (s == "locked");
           lv_color_t c = locked ? lv_color_hex(0x30D158) : lv_color_hex(0xFF453A);
           const char* t = locked ? "Locked" : "Unlocked";
           const char* icon = locked ? "\U000F033E" : "\U000F033F";
+          ESP_LOGI("lock", "Back door state: '%s' -> locked=%d", x.c_str(), locked);
           lv_label_set_text(id(back_door_main), t);
           lv_obj_set_style_text_color(id(back_door_main), c, 0);
           lv_label_set_text(id(back_door_icon_main), icon);
@@ -486,8 +492,10 @@ script:
           if (id(garage_door_open).has_state() && id(garage_door_open).state) { has_open = true; list += "S.Garage  "; }
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) { has_open = true; list += "N.Garage  "; }
           if (id(back_door_sensor_open).has_state() && id(back_door_sensor_open).state) { has_open = true; list += "Back Door  "; }
-          if (id(front_door_locked).has_state() && id(front_door_locked).state != "locked") { has_open = true; list += "Front Unlocked  "; }
-          if (id(back_door_locked).has_state() && id(back_door_locked).state != "locked") { has_open = true; list += "Back Unlocked"; }
+          std::string fl = id(front_door_locked).state; for (auto &ch : fl) ch = tolower(ch);
+          std::string bl = id(back_door_locked).state; for (auto &ch : bl) ch = tolower(ch);
+          if (id(front_door_locked).has_state() && fl != "locked") { has_open = true; list += "Front Unlocked  "; }
+          if (id(back_door_locked).has_state() && bl != "locked") { has_open = true; list += "Back Unlocked"; }
           if (has_open) {
             lv_obj_clear_flag(id(open_sensors_warning), LV_OBJ_FLAG_HIDDEN);
             lv_label_set_text(id(open_sensors_list), list.c_str());
@@ -502,8 +510,8 @@ script:
             lv_obj_set_style_text_color(id(alarm_sensors_list), red, 0);
           }
           bool any = false;
-          if (id(front_door_locked).has_state() && id(front_door_locked).state != "locked") any = true;
-          if (id(back_door_locked).has_state() && id(back_door_locked).state != "locked") any = true;
+          if (id(front_door_locked).has_state() && fl != "locked") any = true;
+          if (id(back_door_locked).has_state() && bl != "locked") any = true;
           if (id(garage_door_open).has_state() && id(garage_door_open).state) any = true;
           if (id(north_garage_door_open).has_state() && id(north_garage_door_open).state) any = true;
           lv_label_set_text(id(security_summary), any ? "Open / Unsecured" : "All Secured");

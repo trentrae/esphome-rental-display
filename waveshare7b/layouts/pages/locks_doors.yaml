@@ -34,8 +34,17 @@
           bg_color: 0x2C2C2E
           border_width: 0
           radius: 20
-          pad_all: 24
-          widgets:
+          pad_all: 24          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: lock.lock
+                data:
+                  entity_id: ${front_door_lock}
+          on_long_press:
+            - homeassistant.service:
+                service: lock.unlock
+                data:
+                  entity_id: ${front_door_lock}          widgets:
             - label:
                 text: "FRONT DOOR"
                 text_font: roboto_16
@@ -75,8 +84,17 @@
           bg_color: 0x2C2C2E
           border_width: 0
           radius: 20
-          pad_all: 24
-          widgets:
+          pad_all: 24          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: lock.lock
+                data:
+                  entity_id: ${back_door_lock}
+          on_long_press:
+            - homeassistant.service:
+                service: lock.unlock
+                data:
+                  entity_id: ${back_door_lock}          widgets:
             - label:
                 text: "BACK DOOR"
                 text_font: roboto_16
