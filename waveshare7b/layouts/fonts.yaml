@@ -159,3 +159,4 @@ font:
       - "\U000F033E" # lock (locks)
       - "\U000F0335" # lightbulb (lights)
       - "\U000F0249" # text-box (logs)
+      - "\U000F0493" # alert-circle (warnings)
