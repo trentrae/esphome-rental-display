@@ -1,5 +1,5 @@
 # lighting_control.yaml - Lighting Controls Page
-# 1024x600 | 3 individual light cards + all-on/all-off quick actions
+# 1024x600 | 8 light toggle cards (2x4 grid) + all-on/all-off quick actions
 
 # ── Header ────────────────────────────────────────────────────────────────────
 - obj:
@@ -15,7 +15,7 @@
           text_color: 0xFFFFFF
           align: CENTER
 
-# ── Content Area ──────────────────────────────────────────────────────────────
+# ── Content Area (8 light cards + quick actions) ─────────────────────────────
 - obj:
     x: 0
     y: 70
@@ -25,15 +25,16 @@
     border_width: 0
     widgets:
 
-      # ── Living Room Light Card ────────────────────────────────────────────────
+      # ── Row 1: Living Room | Fan Light | Media Room | Playroom ─────────────
+
       - obj:
           x: 12
-          y: 12
-          width: 316
-          height: 280
+          y: 8
+          width: 244
+          height: 155
           bg_color: 0x2C2C2E
           border_width: 0
-          radius: 20
+          radius: 16
           clickable: true
           on_click:
             - homeassistant.service:
@@ -43,40 +44,209 @@
           widgets:
             - label:
                 text: "Living Room"
-                text_font: roboto_20
+                text_font: roboto_16
                 text_color: 0x8E8E93
                 align: TOP_MID
-                y: 20
+                y: 12
             - label:
                 id: living_room_light_icon
                 text: "\U000F0335"
-                text_font: mdi_56
+                text_font: mdi_48
                 text_color: 0x8E8E93
                 align: CENTER
-                y: -30
+                y: -18
             - label:
                 id: living_room_toggle_text
                 text: "OFF"
-                text_font: roboto_32
+                text_font: roboto_20
                 text_color: 0x8E8E93
                 align: CENTER
-                y: 30
+                y: 26
             - label:
                 text: "Tap to toggle"
-                text_font: roboto_14
+                text_font: roboto_12
                 text_color: 0x3A3A3C
                 align: BOTTOM_MID
-                y: -16
+                y: -6
 
-      # ── Kitchen Light Card ────────────────────────────────────────────────────
       - obj:
-          x: 344
-          y: 12
-          width: 316
-          height: 280
+          x: 264
+          y: 8
+          width: 244
+          height: 155
           bg_color: 0x2C2C2E
           border_width: 0
-          radius: 20
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: homeassistant.toggle
+                data:
+                  entity_id: ${fan_light}
+          widgets:
+            - label:
+                text: "Fan Light"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 12
+            - label:
+                id: fan_light_icon
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -18
+            - label:
+                id: fan_toggle_text
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 26
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_12
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 516
+          y: 8
+          width: 244
+          height: 155
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: homeassistant.toggle
+                data:
+                  entity_id: ${media_room_light}
+          widgets:
+            - label:
+                text: "Media Room"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 12
+            - label:
+                id: media_room_light_icon
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -18
+            - label:
+                id: media_room_toggle_text
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 26
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_12
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 768
+          y: 8
+          width: 244
+          height: 155
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: homeassistant.toggle
+                data:
+                  entity_id: ${playroom_light}
+          widgets:
+            - label:
+                text: "Playroom"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 12
+            - label:
+                id: playroom_light_icon
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -18
+            - label:
+                id: playroom_toggle_text
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 26
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_12
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -6
+
+      # ── Row 2: Nook | Kitchen | Fireplace | Garage Gym ─────────────────────
+
+      - obj:
+          x: 12
+          y: 171
+          width: 244
+          height: 155
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: homeassistant.toggle
+                data:
+                  entity_id: ${nook_light}
+          widgets:
+            - label:
+                text: "Nook"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 12
+            - label:
+                id: nook_light_icon
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -18
+            - label:
+                id: nook_toggle_text
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 26
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_12
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -6
+
+      - obj:
+          x: 264
+          y: 171
+          width: 244
+          height: 155
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
           clickable: true
           on_click:
             - homeassistant.service:
@@ -86,80 +256,121 @@
           widgets:
             - label:
                 text: "Kitchen"
-                text_font: roboto_20
+                text_font: roboto_16
                 text_color: 0x8E8E93
                 align: TOP_MID
-                y: 20
+                y: 12
             - label:
                 id: kitchen_light_icon
                 text: "\U000F0335"
-                text_font: mdi_56
+                text_font: mdi_48
                 text_color: 0x8E8E93
                 align: CENTER
-                y: -30
+                y: -18
             - label:
                 id: kitchen_toggle_text
                 text: "OFF"
-                text_font: roboto_32
+                text_font: roboto_20
                 text_color: 0x8E8E93
                 align: CENTER
-                y: 30
+                y: 26
             - label:
                 text: "Tap to toggle"
-                text_font: roboto_14
+                text_font: roboto_12
                 text_color: 0x3A3A3C
                 align: BOTTOM_MID
-                y: -16
+                y: -6
 
-      # ── Outdoor Light Card ────────────────────────────────────────────────────
       - obj:
-          x: 676
-          y: 12
-          width: 336
-          height: 280
+          x: 516
+          y: 171
+          width: 244
+          height: 155
           bg_color: 0x2C2C2E
           border_width: 0
-          radius: 20
+          radius: 16
           clickable: true
           on_click:
             - homeassistant.service:
                 service: homeassistant.toggle
                 data:
-                  entity_id: ${outdoor_light}
+                  entity_id: ${fireplace_light}
           widgets:
             - label:
-                text: "Outdoor Front"
-                text_font: roboto_20
+                text: "Fireplace"
+                text_font: roboto_16
                 text_color: 0x8E8E93
                 align: TOP_MID
-                y: 20
+                y: 12
             - label:
-                id: outdoor_light_icon
+                id: fireplace_light_icon
                 text: "\U000F0335"
-                text_font: mdi_56
+                text_font: mdi_48
                 text_color: 0x8E8E93
                 align: CENTER
-                y: -30
+                y: -18
             - label:
-                id: outdoor_toggle_text
+                id: fireplace_toggle_text
                 text: "OFF"
-                text_font: roboto_32
+                text_font: roboto_20
                 text_color: 0x8E8E93
                 align: CENTER
-                y: 30
+                y: 26
             - label:
                 text: "Tap to toggle"
-                text_font: roboto_14
+                text_font: roboto_12
                 text_color: 0x3A3A3C
                 align: BOTTOM_MID
-                y: -16
+                y: -6
+
+      - obj:
+          x: 768
+          y: 171
+          width: 244
+          height: 155
+          bg_color: 0x2C2C2E
+          border_width: 0
+          radius: 16
+          clickable: true
+          on_click:
+            - homeassistant.service:
+                service: homeassistant.toggle
+                data:
+                  entity_id: ${garage_gym_light}
+          widgets:
+            - label:
+                text: "Garage Gym"
+                text_font: roboto_16
+                text_color: 0x8E8E93
+                align: TOP_MID
+                y: 12
+            - label:
+                id: garage_gym_light_icon
+                text: "\U000F0335"
+                text_font: mdi_48
+                text_color: 0x8E8E93
+                align: CENTER
+                y: -18
+            - label:
+                id: garage_gym_toggle_text
+                text: "OFF"
+                text_font: roboto_20
+                text_color: 0x8E8E93
+                align: CENTER
+                y: 26
+            - label:
+                text: "Tap to toggle"
+                text_font: roboto_12
+                text_color: 0x3A3A3C
+                align: BOTTOM_MID
+                y: -6
 
       # ── Quick Actions ─────────────────────────────────────────────────────────
       - obj:
           x: 12
-          y: 308
-          width: 492
-          height: 120
+          y: 334
+          width: 496
+          height: 108
           bg_color: 0x0A84FF
           border_width: 0
           radius: 16
@@ -172,30 +383,50 @@
             - homeassistant.service:
                 service: homeassistant.turn_on
                 data:
+                  entity_id: ${fan_light}
+            - homeassistant.service:
+                service: homeassistant.turn_on
+                data:
+                  entity_id: ${media_room_light}
+            - homeassistant.service:
+                service: homeassistant.turn_on
+                data:
+                  entity_id: ${playroom_light}
+            - homeassistant.service:
+                service: homeassistant.turn_on
+                data:
+                  entity_id: ${nook_light}
+            - homeassistant.service:
+                service: homeassistant.turn_on
+                data:
                   entity_id: ${kitchen_light}
             - homeassistant.service:
                 service: homeassistant.turn_on
                 data:
-                  entity_id: ${outdoor_light}
+                  entity_id: ${fireplace_light}
+            - homeassistant.service:
+                service: homeassistant.turn_on
+                data:
+                  entity_id: ${garage_gym_light}
           widgets:
             - label:
                 text: "\U000F0769"
-                text_font: mdi_56
+                text_font: mdi_48
                 text_color: 0xFFFFFF
                 align: CENTER
-                x: -120
+                x: -100
             - label:
                 text: "ALL LIGHTS ON"
-                text_font: roboto_28
+                text_font: roboto_24
                 text_color: 0xFFFFFF
                 align: CENTER
-                x: 60
+                x: 50
 
       - obj:
-          x: 520
-          y: 308
-          width: 492
-          height: 120
+          x: 516
+          y: 334
+          width: 496
+          height: 108
           bg_color: 0x3A3A3C
           border_width: 0
           radius: 16
@@ -208,24 +439,44 @@
             - homeassistant.service:
                 service: homeassistant.turn_off
                 data:
+                  entity_id: ${fan_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${media_room_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${playroom_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${nook_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
                   entity_id: ${kitchen_light}
             - homeassistant.service:
                 service: homeassistant.turn_off
                 data:
-                  entity_id: ${outdoor_light}
+                  entity_id: ${fireplace_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${garage_gym_light}
           widgets:
             - label:
                 text: "\U000F0336"
-                text_font: mdi_56
+                text_font: mdi_48
                 text_color: 0xFFFFFF
                 align: CENTER
-                x: -120
+                x: -100
             - label:
                 text: "ALL LIGHTS OFF"
-                text_font: roboto_28
+                text_font: roboto_24
                 text_color: 0xFFFFFF
                 align: CENTER
-                x: 60
+                x: 50
 
 # ── Bottom Navigation ──────────────────────────────────────────────────────────
 - obj:

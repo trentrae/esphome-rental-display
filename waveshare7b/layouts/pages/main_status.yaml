@@ -586,11 +586,31 @@
             - homeassistant.service:
                 service: homeassistant.turn_off
                 data:
+                  entity_id: ${fan_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${media_room_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${playroom_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${nook_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
                   entity_id: ${kitchen_light}
             - homeassistant.service:
                 service: homeassistant.turn_off
                 data:
-                  entity_id: ${outdoor_light}
+                  entity_id: ${fireplace_light}
+            - homeassistant.service:
+                service: homeassistant.turn_off
+                data:
+                  entity_id: ${garage_gym_light}
           widgets:
             - label:
                 text: "\U000F0336"

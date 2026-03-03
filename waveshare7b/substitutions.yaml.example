@@ -45,11 +45,16 @@ substitutions:
   south_garage_door: "cover.garage_door"
   north_garage_door: "cover.north_garage_door"   # TODO: set your north garage cover entity
 
-  # ── Lights (display controls 3 lights) ────────────────────────────────────────
-  # These appear on the lighting control page + "All Lights Off" quick action
-  living_room_light: "light.in_wall_paddle_dimmer_qfsw_500s"   # Kitchen / main room
-  kitchen_light: "light.in_wall_paddle_dimmer_500s"             # Patio dining / secondary
-  outdoor_light: "switch.scene_capable_push_on_off"             # Front coach / outdoor
+  # ── Lights (display controls 8 lights) ────────────────────────────────────────
+  # These appear on the lighting control page + "All Lights Off/On" quick actions
+  living_room_light: "light.living_room"
+  fan_light: "light.living_room_fan_light"
+  media_room_light: "light.media_room"
+  playroom_light: "light.playroom"
+  nook_light: "light.nook_can_lights"
+  kitchen_light: "light.kitchen_lights"
+  fireplace_light: "switch.fireplace"
+  garage_gym_light: "switch.garage_gym"
 
   # ── Climate / Temperature ─────────────────────────────────────────────────────
   # Shown as the first two status cards on the main page

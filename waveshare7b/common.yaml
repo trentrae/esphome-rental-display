@@ -473,15 +473,70 @@ binary_sensor:
           lv_obj_set_style_text_color(id(kitchen_light_icon), c, 0);
 
   - platform: homeassistant
-    id: outdoor_light_state
-    entity_id: ${outdoor_light}
+    id: fan_light_state
+    entity_id: ${fan_light}
     internal: true
     on_state:
       - lambda: |-
           lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
-          lv_label_set_text(id(outdoor_toggle_text), x ? "ON" : "OFF");
-          lv_obj_set_style_text_color(id(outdoor_toggle_text), c, 0);
-          lv_obj_set_style_text_color(id(outdoor_light_icon), c, 0);
+          lv_label_set_text(id(fan_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(fan_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(fan_light_icon), c, 0);
+
+  - platform: homeassistant
+    id: media_room_light_state
+    entity_id: ${media_room_light}
+    internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(media_room_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(media_room_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(media_room_light_icon), c, 0);
+
+  - platform: homeassistant
+    id: playroom_light_state
+    entity_id: ${playroom_light}
+    internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(playroom_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(playroom_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(playroom_light_icon), c, 0);
+
+  - platform: homeassistant
+    id: nook_light_state
+    entity_id: ${nook_light}
+    internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(nook_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(nook_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(nook_light_icon), c, 0);
+
+  - platform: homeassistant
+    id: fireplace_light_state
+    entity_id: ${fireplace_light}
+    internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(fireplace_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(fireplace_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(fireplace_light_icon), c, 0);
+
+  - platform: homeassistant
+    id: garage_gym_light_state
+    entity_id: ${garage_gym_light}
+    internal: true
+    on_state:
+      - lambda: |-
+          lv_color_t c = x ? lv_color_hex(0xFFD700) : lv_color_hex(0x8E8E93);
+          lv_label_set_text(id(garage_gym_toggle_text), x ? "ON" : "OFF");
+          lv_obj_set_style_text_color(id(garage_gym_toggle_text), c, 0);
+          lv_obj_set_style_text_color(id(garage_gym_light_icon), c, 0);
 
 script:
   # Shared security status recalculation (called by lock/door/garage sensor callbacks)
