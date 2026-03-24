@@ -68,7 +68,7 @@ sensor:
   # Weather forecast high temps (from HA template sensors - see README)
   - platform: homeassistant
     id: forecast_high_0
-    entity_id: sensor.weather_forecast_high_0
+    entity_id: ${weather_forecast_prefix}_high_0
     internal: true
     on_value:
       - lambda: |-
@@ -76,7 +76,7 @@ sensor:
           lv_label_set_text(id(wx_high_0), buf);
   - platform: homeassistant
     id: forecast_high_1
-    entity_id: sensor.weather_forecast_high_1
+    entity_id: ${weather_forecast_prefix}_high_1
     internal: true
     on_value:
       - lambda: |-
@@ -84,7 +84,7 @@ sensor:
           lv_label_set_text(id(wx_high_1), buf);
   - platform: homeassistant
     id: forecast_high_2
-    entity_id: sensor.weather_forecast_high_2
+    entity_id: ${weather_forecast_prefix}_high_2
     internal: true
     on_value:
       - lambda: |-
@@ -92,7 +92,7 @@ sensor:
           lv_label_set_text(id(wx_high_2), buf);
   - platform: homeassistant
     id: forecast_high_3
-    entity_id: sensor.weather_forecast_high_3
+    entity_id: ${weather_forecast_prefix}_high_3
     internal: true
     on_value:
       - lambda: |-
@@ -100,7 +100,7 @@ sensor:
           lv_label_set_text(id(wx_high_3), buf);
   - platform: homeassistant
     id: forecast_high_4
-    entity_id: sensor.weather_forecast_high_4
+    entity_id: ${weather_forecast_prefix}_high_4
     internal: true
     on_value:
       - lambda: |-
@@ -110,7 +110,7 @@ sensor:
   # Weather forecast low temps
   - platform: homeassistant
     id: forecast_low_0
-    entity_id: sensor.weather_forecast_low_0
+    entity_id: ${weather_forecast_prefix}_low_0
     internal: true
     on_value:
       - lambda: |-
@@ -118,7 +118,7 @@ sensor:
           lv_label_set_text(id(wx_low_0), buf);
   - platform: homeassistant
     id: forecast_low_1
-    entity_id: sensor.weather_forecast_low_1
+    entity_id: ${weather_forecast_prefix}_low_1
     internal: true
     on_value:
       - lambda: |-
@@ -126,7 +126,7 @@ sensor:
           lv_label_set_text(id(wx_low_1), buf);
   - platform: homeassistant
     id: forecast_low_2
-    entity_id: sensor.weather_forecast_low_2
+    entity_id: ${weather_forecast_prefix}_low_2
     internal: true
     on_value:
       - lambda: |-
@@ -134,7 +134,7 @@ sensor:
           lv_label_set_text(id(wx_low_2), buf);
   - platform: homeassistant
     id: forecast_low_3
-    entity_id: sensor.weather_forecast_low_3
+    entity_id: ${weather_forecast_prefix}_low_3
     internal: true
     on_value:
       - lambda: |-
@@ -142,7 +142,7 @@ sensor:
           lv_label_set_text(id(wx_low_3), buf);
   - platform: homeassistant
     id: forecast_low_4
-    entity_id: sensor.weather_forecast_low_4
+    entity_id: ${weather_forecast_prefix}_low_4
     internal: true
     on_value:
       - lambda: |-
@@ -192,7 +192,7 @@ text_sensor:
   # Each contains the HA weather condition string (sunny, cloudy, rainy, etc.)
   - platform: homeassistant
     id: forecast_cond_0
-    entity_id: sensor.weather_forecast_condition_0
+    entity_id: ${weather_forecast_prefix}_condition_0
     internal: true
     on_value:
       - lambda: |-
@@ -215,7 +215,7 @@ text_sensor:
           lv_label_set_text(id(wx_icon_0), icon_for(x));
   - platform: homeassistant
     id: forecast_cond_1
-    entity_id: sensor.weather_forecast_condition_1
+    entity_id: ${weather_forecast_prefix}_condition_1
     internal: true
     on_value:
       - lambda: |-
@@ -237,7 +237,7 @@ text_sensor:
           lv_label_set_text(id(wx_icon_1), icon_for(x));
   - platform: homeassistant
     id: forecast_cond_2
-    entity_id: sensor.weather_forecast_condition_2
+    entity_id: ${weather_forecast_prefix}_condition_2
     internal: true
     on_value:
       - lambda: |-
@@ -259,7 +259,7 @@ text_sensor:
           lv_label_set_text(id(wx_icon_2), icon_for(x));
   - platform: homeassistant
     id: forecast_cond_3
-    entity_id: sensor.weather_forecast_condition_3
+    entity_id: ${weather_forecast_prefix}_condition_3
     internal: true
     on_value:
       - lambda: |-
@@ -281,7 +281,7 @@ text_sensor:
           lv_label_set_text(id(wx_icon_3), icon_for(x));
   - platform: homeassistant
     id: forecast_cond_4
-    entity_id: sensor.weather_forecast_condition_4
+    entity_id: ${weather_forecast_prefix}_condition_4
     internal: true
     on_value:
       - lambda: |-
@@ -305,31 +305,31 @@ text_sensor:
   # Forecast day names (e.g., "Mon", "Tue", etc.)
   - platform: homeassistant
     id: forecast_day_0
-    entity_id: sensor.weather_forecast_day_0
+    entity_id: ${weather_forecast_prefix}_day_0
     internal: true
     on_value:
       - lambda: lv_label_set_text(id(wx_day_0), x.c_str());
   - platform: homeassistant
     id: forecast_day_1
-    entity_id: sensor.weather_forecast_day_1
+    entity_id: ${weather_forecast_prefix}_day_1
     internal: true
     on_value:
       - lambda: lv_label_set_text(id(wx_day_1), x.c_str());
   - platform: homeassistant
     id: forecast_day_2
-    entity_id: sensor.weather_forecast_day_2
+    entity_id: ${weather_forecast_prefix}_day_2
     internal: true
     on_value:
       - lambda: lv_label_set_text(id(wx_day_2), x.c_str());
   - platform: homeassistant
     id: forecast_day_3
-    entity_id: sensor.weather_forecast_day_3
+    entity_id: ${weather_forecast_prefix}_day_3
     internal: true
     on_value:
       - lambda: lv_label_set_text(id(wx_day_3), x.c_str());
   - platform: homeassistant
     id: forecast_day_4
-    entity_id: sensor.weather_forecast_day_4
+    entity_id: ${weather_forecast_prefix}_day_4
     internal: true
     on_value:
       - lambda: lv_label_set_text(id(wx_day_4), x.c_str());

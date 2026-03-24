@@ -6,8 +6,8 @@
 # For remote package usage, see _package.yaml.
 
 esphome:
-  name: rental-display-7b
-  friendly_name: "Rental Property Display 7B"
+  name: ${device_name}
+  friendly_name: ${friendly_name}
 
 packages:
   - !include device.yaml
